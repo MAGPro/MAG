@@ -21,7 +21,7 @@ public class SubCategoria extends AbstractEntity{
 	private Categoria categoria;
 	
 	public SubCategoria(){
-		super();
+		
 	}
 		
 	public SubCategoria(String descricao, Categoria categoria) {

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 import javax.faces.bean.ManagedBean;
 
 import br.com.mag.business.Categoria;
@@ -18,7 +16,7 @@ import br.com.mag.business.dao.ProdutoDAO;
 public class ProdutoMB implements Serializable{
 	
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
-	private Produto produto = new Produto();
+	private Produto produto;
 	//private List<Categoria> categoriasDisponiveis;
 	private List<Produto> produtos;
 	
@@ -59,11 +57,6 @@ public class ProdutoMB implements Serializable{
 	    	return "Salvando produto..";
 	    }
 	
-	    public String excluir() throws DAOException {
-			
-	    	produtoDAO.excluir(produto);
-	    	    	
-	    	return "Excluindo categoria..";
-	    }
+	   
 
 }

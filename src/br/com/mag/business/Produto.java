@@ -33,7 +33,7 @@ public class Produto extends AbstractEntity {
 	private SubCategoria subcategoria;
 	
 	public Produto(){
-		super();
+		
 	}
 	
 	public Produto(String descricao, TipoGenero genero, String complemento,

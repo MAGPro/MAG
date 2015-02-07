@@ -13,7 +13,9 @@ import javax.persistence.OneToOne;
 import br.com.mag.business.enumeration.TipoGenero;
 
 @Entity
-public class Produto {
+public class Produto extends AbstractEntity {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoProduto;
@@ -29,6 +31,10 @@ public class Produto {
 	
 	@OneToOne
 	private SubCategoria subcategoria;
+	
+	public Produto(){
+		super();
+	}
 	
 	public Produto(String descricao, TipoGenero genero, String complemento,
 			BigDecimal valorVenda, BigDecimal valorCusto, String unidade,
@@ -105,6 +111,10 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 	}
 	
-	
+	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return codigoProduto;
+	}
 		
 }

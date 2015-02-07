@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 
 import br.com.mag.business.Cliente;
 import br.com.mag.business.dao.ClienteDAO;
-import br.com.mag.business.dao.DAOExcpetion;
+import br.com.mag.business.dao.DAOException;
 
 @ManagedBean
 public class ClienteMB implements Serializable {
@@ -45,7 +45,7 @@ public class ClienteMB implements Serializable {
 		return clientes;
 	}
 
-	public String salvar() throws DAOExcpetion {
+	public String salvar() throws DAOException {
 		dao.salvar(cliente);
 		return "Salvou";
 	}

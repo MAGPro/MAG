@@ -8,13 +8,21 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class SubCategoria {
+public class SubCategoria extends AbstractEntity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoSubCategoria;
 	private String descricao;
 	@ManyToOne
 	private Categoria categoria;
+	
+	public SubCategoria(){
+		super();
+	}
 		
 	public SubCategoria(String descricao, Categoria categoria) {
 		super();
@@ -39,6 +47,12 @@ public class SubCategoria {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return codigoSubCategoria;
 	}
 	
 	

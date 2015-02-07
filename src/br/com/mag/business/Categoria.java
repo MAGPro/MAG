@@ -20,12 +20,15 @@ public class Categoria extends AbstractEntity {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoCategoria;
-	
 	private String descricao;
+	private boolean ativo = true;
 	
 	@OneToMany(mappedBy="categoria",fetch=FetchType.LAZY)
 	private List<SubCategoria> subCategorias;
 	
+	public Categoria(){
+		super();
+	}
 	
 	public Categoria(String descricao) {
 		super();
@@ -50,6 +53,13 @@ public class Categoria extends AbstractEntity {
 		this.descricao = descricao;
 	}
 
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	@Override
 	public Integer getId() {

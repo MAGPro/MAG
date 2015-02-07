@@ -27,7 +27,6 @@ public class Cliente extends AbstractEntity{
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoCliente;
-	private Integer teste;
 	private String nome;
 	private String cpf;
 	private Integer rg;

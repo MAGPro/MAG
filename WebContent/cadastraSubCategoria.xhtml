@@ -3,20 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	 xmlns:h="http://java.sun.com/jsf/html"
      xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:p="http://primefaces.org/ui" >
+     xmlns:p="http://primefaces.org/ui" 
+     xmlns:ui="http://java.sun.com/jsf/facelets">
      
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Cadastro de Categoria</title>
 </h:head>
 <h:body>
-    	<p:menubar>
-    		<p:submenu label="Cadastro">
-    			<p:menuitem value="Produto" url="cadastraProduto.xhtml" />
-    			<p:menuitem value="Categoria" url="cadastraCategoria.xhtml" />
-    			<p:menuitem value="SubCategoria" url="cadastraSubCategoria.xhtml" />
-    		</p:submenu> 
-    	</p:menubar>
+	<ui:include src="/pages/menu.xhtml" />
+    	
      
         <h:form prependId="false" >
         	<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita" rowClasses="normal" headerClass="tituloFormulario" styleClass="tabelaGC">

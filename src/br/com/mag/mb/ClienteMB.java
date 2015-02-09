@@ -2,7 +2,8 @@ package br.com.mag.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import br.com.mag.business.Cliente;
 import br.com.mag.business.dao.ClienteDAO;
 import br.com.mag.business.dao.DAOException;
+import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @ManagedBean
 public class ClienteMB implements Serializable {
@@ -46,8 +48,20 @@ public class ClienteMB implements Serializable {
 	}
 
 	public String salvar() throws DAOException {
-		dao.salvar(cliente);
-		return "Salvou";
+		if(cliente.getCodigoCliente() == null){
+			dao.salvar(cliente);
+			this.clientes = dao.listarTodos();
+			return "Salvou";	
+		}else{
+			dao.editar(cliente);
+			this.clientes = dao.listarTodos();
+			return "Atualizado";
+		}
+	}
+
+	// Carregar enumerador
+	public TipoSituacaoCliente[] getTipoSituacoes() {
+		return TipoSituacaoCliente.values();
 	}
 
 }

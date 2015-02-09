@@ -1,5 +1,6 @@
 package br.com.mag.business;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -10,10 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
@@ -32,20 +33,21 @@ public class Cliente extends AbstractEntity{
 	private Integer rg;
 	@Temporal(TemporalType.DATE)
 	private Calendar dataNascimento;
-	private Integer telResidencial;
-	private Integer telComercial;
-	private Integer telMovel;
+	private String telResidencial;
+	private String telComercial;
+	private String telMovel;
 	private String email;
 	@Enumerated(EnumType.STRING)
 	private TipoSituacaoCliente situacaoCliente;
-	
+	@Transient
+	private String dataNascimentoString;
 	@OneToMany(mappedBy="clientes")
 	private List<Endereco> enderecos;
 	
 	
 	public Cliente(String nome, String cpf, Integer rg,
-			Calendar dataNascimento, Integer telResidencial,
-			Integer telComercial, Integer telMovel, String email,
+			Calendar dataNascimento, String telResidencial,
+			String telComercial, String telMovel, String email,
 			TipoSituacaoCliente situacaoCliente, List<Endereco> enderecos) {
 		super();
 		this.nome = nome;
@@ -94,22 +96,22 @@ public class Cliente extends AbstractEntity{
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	public Integer getTelResidencial() {
+	public String getTelResidencial() {
 		return telResidencial;
 	}
-	public void setTelResidencial(Integer telResidencial) {
+	public void setTelResidencial(String telResidencial) {
 		this.telResidencial = telResidencial;
 	}
-	public Integer getTelComercial() {
+	public String getTelComercial() {
 		return telComercial;
 	}
-	public void setTelComercial(Integer telComercial) {
+	public void setTelComercial(String telComercial) {
 		this.telComercial = telComercial;
 	}
-	public Integer getTelMovel() {
+	public String getTelMovel() {
 		return telMovel;
 	}
-	public void setTelMovel(Integer telMovel) {
+	public void setTelMovel(String telMovel) {
 		this.telMovel = telMovel;
 	}
 	public String getEmail() {
@@ -135,6 +137,18 @@ public class Cliente extends AbstractEntity{
 	public Integer getId() {
 		// TODO Auto-generated method stub
 		return codigoCliente;
+	}
+
+	public String getDataNascimentoString() {
+		if(this.dataNascimento != null){
+			DateFormat d = DateFormat.getDateInstance(DateFormat.MEDIUM);
+			dataNascimentoString = d.format(this.dataNascimento.getTime());
+		}
+		return dataNascimentoString;
+	}
+
+	public void setDataNascimentoString(String dataNascimentoString) {
+		this.dataNascimentoString = dataNascimentoString;
 	}
 
 }

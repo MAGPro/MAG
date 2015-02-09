@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta charset="UTF-8" />
 	<title>Cadastro Cliente</title>
-	<h:outputStylesheet library="css" name="estiloAplicacao.css" />
 </h:head>
-
 <h:body>
+	<ui:include src="/pages/menu.xhtml" />
 	<h:form prependId="false">
 
 		<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita"
@@ -23,18 +23,74 @@
 			<p:outputLabel for="nome" value="Nome" />
 			<p:inputText id="nome" value="#{clienteMB.cliente.nome}" />
 			<p:outputLabel for="cpf" value="CPF" />
-			<p:inputText id="cpf" value="#{clienteMB.cliente.cpf}" />
-			<p:commandButton value="Salvar" action="#{clienteMB.salvar}" />
+			<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
+				mask="999.999.999-99" />
+			<p:outputLabel for="rg" value="RG" />
+			<p:inputText id="rg" value="#{clienteMB.cliente.rg}" />
+
+			<p:outputLabel for="dataNascimento" value="Data Nascimento" />
+			<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" mask="true"
+				value="#{clienteMB.cliente.dataNascimento.time}" />
+
+			<p:outputLabel for="telResidencial" value="Tel. Residencial" />
+			<p:inputMask id="telResidencial"
+				value="#{clienteMB.cliente.telResidencial}" mask="(99) 999-9999" />
+			<p:outputLabel for="telComercial" value="Tel. Comercial" />
+			<p:inputMask id="telComercial"
+				value="#{clienteMB.cliente.telComercial}"
+				mask="(99) 999-9999? x99999" />
+			<p:outputLabel for="telMovel" value="Tel. Celular" />
+			<p:inputMask id="telMovel" value="#{clienteMB.cliente.telMovel}"
+				mask="(99) 999-9999" />
+			<p:outputLabel for="email" value="Email" />
+			<p:inputText id="email" value="#{clienteMB.cliente.email}" />
+
+			<p:outputLabel value="Situação Cliente" />
+			<h:panelGroup>
+				<p:selectOneMenu id="situacaoCliente"
+					value="#{clienteMB.cliente.situacaoCliente}">
+					<f:selectItems var="s" value="#{clienteMB.tipoSituacoes}"
+						itemValue="#{s}" itemLabel="#{s.label}" />
+				</p:selectOneMenu>
+			</h:panelGroup>
+
+			<p:commandButton value="Salvar" ajax="false"
+				actionListener="#{clienteMB.salvar}" />
+
 		</p:panelGrid>
 
-		<p:dataTable var="cliente" value="#{clienteMB.clientes}">
-			<p:column headerText="CodigoCliente">
-				<p:outputLabel value="#{cliente.codigoCliente}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Nome">
-				<p:outputLabel value="#{cliente.nome}"></p:outputLabel>	
-			</p:column>
-		</p:dataTable>
+		<p:panel id="lista">
+			<p:dataTable var="cliente" value="#{clienteMB.clientes}">
+				<p:column headerText="CodigoCliente">
+					<p:outputLabel value="#{cliente.codigoCliente}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{cliente.nome}" />
+				</p:column>
+				<p:column headerText="CPF">
+					<p:outputLabel value="#{cliente.cpf}" />
+				</p:column>
+				<p:column headerText="RG">
+					<p:outputLabel value="#{cliente.rg}" />
+				</p:column>
+				<p:column headerText="Data Nascimento">
+					<p:outputLabel value="#{cliente.dataNascimentoString}" />
+				</p:column>
+				<p:column headerText="Tel. Resid.">
+					<p:outputLabel value="#{cliente.telResidencial}" />
+				</p:column>
+				<p:column headerText="Tel. Comerc.">
+					<p:outputLabel value="#{cliente.telComercial}" />
+				</p:column>
+				<p:column headerText="Tel. Cel.">
+					<p:outputLabel value="#{cliente.telMovel}" />
+				</p:column>
+				<p:column headerText="Email">
+					<p:outputLabel value="#{cliente.email}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
 
 	</h:form>
 </h:body>

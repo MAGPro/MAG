@@ -12,38 +12,34 @@
 </h:head>
 <h:body>
     	<ui:include src="/pages/menu.xhtml" />
-     
-        <h:form prependId="false" >
-        	<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita" rowClasses="normal" headerClass="tituloFormulario" styleClass="tabelaGC">
-            <f:facet name="header">
-            <p:outputLabel value="Cadastro de categorias"/>
-            </f:facet>
-           
+    	
+    	<h:form>
+    		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+		</h:form>
+		
+        <h:form prependId="false">
+        	<h:inputHidden value="#{categoriaMB.categoria.codigoCategoria}"/>
+        
+          	<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita" rowClasses="normal" headerClass="tituloFormulario" styleClass="tabelaGC">
+           		
+	            <f:facet name="header">
+	           		<p:outputLabel value="Cadastro de categorias"/>
+	            </f:facet>
+
 			<p:outputLabel value="Descrição:" for="descricao"/>
-			<p:inputText id="descricao" value="#{categoriaMB.categoria.descricao}" size="40"/>
-			
-			<p:outputLabel value="Ativo:" for="ativo" />
-			<p:selectBooleanCheckbox id="ativo" value="#{categoriaMB.categoria.ativo}"/>
-			
-			<h:outputText value=""/>
-			<p:commandButton value="Salvar" action="#{categoriaMB.salvar}"/>
-			
+				<p:inputText id="descricao" required="true" value="#{categoriaMB.categoria.descricao}" size="40"/>
+				
+				<p:outputLabel value="Ativo:" for="ativo" />
+				<p:selectBooleanCheckbox id="ativo" value="#{categoriaMB.categoria.ativo}"/>
+				
+				<h:outputText value=""/>
+				<p:commandButton value="Salvar" onsuccess="Criado com sucesso" actionListener="#{messagesViewMB.info}" action="#{categoriaMB.salvar}"/>
+						
 			</p:panelGrid>
         </h:form>
-      <p:dataTable var="categoria" value="#{categoriaMB.categorias}">
-  		  <p:column headerText="Id">
-        		<h:outputText value="#{categoria.codigoCategoria}" />
-    	  </p:column>
- 
-   		  <p:column headerText="Descrição">
-      			<h:outputText value="#{categoria.descricao}" />
-    	  </p:column>
- 		
- 		 <p:column headerText="Situação">
-        		<h:outputText value="#{categoria.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
-   		 </p:column>
-   		
- 	</p:dataTable>
-       
+     
+
+     
     </h:body>
 </html>

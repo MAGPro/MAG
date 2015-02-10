@@ -20,12 +20,11 @@ import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @Entity
 public class Cliente extends AbstractEntity{
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -3164037012965263022L;
+	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoCliente;
 	private String nome;

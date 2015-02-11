@@ -11,8 +11,10 @@ import javax.faces.context.FacesContext;
 public class MessagesViewMB{
    
 	    public void info() {
-	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "PrimeFaces Rocks."));
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Cadastro salvo com sucesso."));
 	    }
-
+	    public void error() {
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, " ", "Esta ação não pode ser executada."));
+	    }
 
 }

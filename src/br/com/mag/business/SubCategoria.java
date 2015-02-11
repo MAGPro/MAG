@@ -19,6 +19,7 @@ public class SubCategoria extends AbstractEntity{
 	private String descricao;
 	@ManyToOne
 	private Categoria categoria;
+	private boolean ativo = true;
 	
 	public SubCategoria(){
 		
@@ -47,6 +48,14 @@ public class SubCategoria extends AbstractEntity{
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

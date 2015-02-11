@@ -26,17 +26,16 @@
 				</f:facet>
 		
 				<p:outputLabel value="Descrição:" for="descricao" />
-				<p:inputText id="descricao" required="true"
-							value="#{categoriaMB.categoria.descricao}" size="40" />
+				<p:inputText id="descricao"
+							value="#{categoriaMB.categoria.descricao}" size="40" readonly="true"/>
 		
 				<p:outputLabel value="Ativo:" for="ativo" />
-					<p:selectBooleanCheckbox id="ativo"
+					<p:selectBooleanCheckbox disabled="true" id="ativo"
 							value="#{categoriaMB.categoria.ativo}" />
 		
 				<h:outputText value="" />
-				<p:commandButton value="Salvar"
-							actionListener="#{messagesViewMB.info}"
-							action="#{categoriaMB.salvar}" />
+				<p:commandButton value="Voltar"
+							action="#{categoriaMB.voltar}" />
 	
 			</p:panelGrid>
 		</h:form>

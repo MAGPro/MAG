@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
-import org.primefaces.context.RequestContext;
 
 import br.com.mag.business.Categoria;
 import br.com.mag.business.dao.CategoriaDAO;
@@ -56,23 +55,18 @@ public class CategoriaMB implements Serializable {
         return categorias;
 }
 
-	public void salvar() throws DAOException {
-		
-		RequestContext context = RequestContext.getCurrentInstance();
+	public String salvar() throws DAOException {
 		
 		if (categoria == null) {
 			//enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
 		} else if (categoria.getCodigoCategoria() != null) {
 			categoriaDAO.editar(categoria);
-			//context.addCallbackParam("Categoria atualizada com sucesso", true);
-			
+		
 		} else {
-			categoriaDAO.salvar(categoria);
-			//context.addCallbackParam("Categoria cadastrada com sucesso", true);
-			context.execute("confirmation.show();");
+			categoriaDAO.salvar(categoria);			
 		}
-
-	//	return "/buscaCategoria.faces?faces-redirect=true";
+		categoria = null;
+		return "/buscaCategoria.faces";
 	}
 
 	public String editar() throws DAOException {
@@ -80,6 +74,18 @@ public class CategoriaMB implements Serializable {
 		categoria = categoriaDAO.getPrimaryKey(categoria);
 
 		return "/cadastraCategoria.faces";
+	}
+	
+	public String cadastrar(){
+
+		return "/cadastraCategoria.faces";
+	}
+	
+	public String visualizar() throws DAOException {
+
+		categoria = categoriaDAO.getPrimaryKey(categoria);
+
+		return "/visualizaCategoria.faces";
 	}
 	
 	public String buscar() throws DAOException {
@@ -95,6 +101,7 @@ public class CategoriaMB implements Serializable {
 		} else {
 			categoriaDAO.excluir(categoria);
 		}
+	
 		return "/buscaCategoria.faces?faces-redirect=true";
 
 	}
@@ -104,5 +111,6 @@ public class CategoriaMB implements Serializable {
 		return "/buscaCategoria.faces";
 	}
 
+	
 
 }

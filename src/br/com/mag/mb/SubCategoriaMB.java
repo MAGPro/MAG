@@ -13,6 +13,9 @@ import br.com.mag.business.dao.SubCategoriaDAO;
 @ManagedBean
 public class SubCategoriaMB implements Serializable{
 	
+
+	private static final long serialVersionUID = 4837148550691075343L;
+	
 	private SubCategoriaDAO subCategoriaDAO = new SubCategoriaDAO();
 	private SubCategoria subCategoria;
 	private List<SubCategoria> subCategorias;

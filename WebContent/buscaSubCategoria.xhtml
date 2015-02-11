@@ -16,19 +16,19 @@
 				rowClasses="normal" headerClass="tituloFormulario"
 				styleClass="tabelaGC">
 				<f:facet name="header">
-					<p:outputLabel value="Buscar categoria" />
+					<p:outputLabel value="Buscar subCategoria" />
 				</f:facet>
 	
 				<p:outputLabel value="Descrição:" for="descricao" />
 				<p:inputText id="descricao"
-					value="#{categoriaMB.categoria.descricao}" size="40" />
+					value="#{subCategoriaMB.subCategoria.descricao}" size="40" />
 	
 				<p:outputLabel value="Ativo:" for="ativo" />
 				<p:selectBooleanCheckbox id="ativo"
-					value="#{categoriaMB.categoria.ativo}" />
+					value="#{subCategoriaMB.subCategoria.ativo}" />
 	
 				<h:outputText value="" />
-				<p:commandButton value="Buscar" action="#{categoriaMB.buscar}" update="form"/>
+				<p:commandButton value="Buscar" action="#{subCategoriaMB.buscar}" update="form"/>
 	
 			</p:panelGrid>
 	
@@ -40,7 +40,7 @@
 		<td rowspan="3"/>
 		<td rowspan="3"/>
 		<td rowspan="3" align="center">
-				<p:commandLink action="#{categoriaMB.cadastrar}" >
+				<p:commandLink action="#{subCategoriaMB.cadastrar}" >
 					<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
 				</p:commandLink>
 		</td>		
@@ -49,39 +49,39 @@
 		
 	<h:panelGrid></h:panelGrid>
 	<h:panelGrid></h:panelGrid>
-		<p:dataTable var="categoria" value="#{categoriaMB.categorias}">
+		<p:dataTable var="subCategoria" value="#{subCategoriaMB.subCategorias}">
 			<p:column headerText="Id">
-				<h:outputText value="#{categoria.codigoCategoria}" />
+				<h:outputText value="#{subCategoria.codigoSubCategoria}" />
 			</p:column>
 	
 			<p:column headerText="Descrição">
-				<h:outputText value="#{categoria.descricao}" />
+				<h:outputText value="#{subCategoria.descricao}" />
 			</p:column>
 	
 			<p:column headerText="Situação">
 				<h:outputText
-					value="#{categoria.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
+					value="#{subCategoria.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
 			</p:column>
 	
 			<p:column headerText="Ações" style="text-align: center">
 			
-				<p:commandLink action="#{categoriaMB.visualizar}" >
+				<p:commandLink action="#{subCategoriaMB.visualizar}" >
 					<p:graphicImage url="/resources/img/glyphicons_027_search.png" title="Visualizar" />				
-					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaMB.categoria}" />
+					<f:setPropertyActionListener value="#{subCategoria}" target="#{subCategoriaMB.subCategoria}" />
 				</p:commandLink>
 				
 				<h:outputText value="   " />
 			
-				<p:commandLink action="#{categoriaMB.editar}" >
+				<p:commandLink action="#{subCategoriaMB.editar}" >
 					<p:graphicImage url="/resources/img/glyphicons_030_pencil.png" title="Editar" />				
-					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaMB.categoria}" />
+					<f:setPropertyActionListener value="#{subCategoria}" target="#{subCategoriaMB.subCategoria}" />
 				</p:commandLink>
 				
 				<h:outputText value="   " />
-				<p:commandLink action="#{categoriaMB.excluir}" >
+				<p:commandLink action="#{subCategoriaMB.excluir}" >
 					<p:graphicImage url="/resources/img/glyphicons_016_bin.png" title="Excluir" />					
-					<f:setPropertyActionListener value="#{categoria}"
-							target="#{categoriaMB.categoria}" />
+					<f:setPropertyActionListener value="#{subCategoria}"
+							target="#{subCategoriaMB.subCategoria}" />
 				</p:commandLink>
 			
 			</p:column>

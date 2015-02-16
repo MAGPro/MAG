@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.com.mag.business.enumeration.SituacaoContasReceber;
+import br.com.mag.business.enumeration.TipoSituacaoContasReceber;
 
 @Entity
 public class ContasReceber {
@@ -20,14 +20,14 @@ public class ContasReceber {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoContasReceber;
 	@Enumerated(EnumType.STRING)
-	private SituacaoContasReceber situacaoContasReceber;
+	private TipoSituacaoContasReceber situacaoContasReceber;
 	private Calendar dataPagamento;
 	private BigDecimal valorPago;
 	
 	@ManyToOne
 	private Venda venda;
 	
-	public ContasReceber(SituacaoContasReceber situacaoContasReceber,
+	public ContasReceber(TipoSituacaoContasReceber situacaoContasReceber,
 			Calendar dataPagamento, BigDecimal valorPago, Venda venda) {
 		super();
 		this.situacaoContasReceber = situacaoContasReceber;
@@ -48,11 +48,11 @@ public class ContasReceber {
 		this.codigoContasReceber = codigoContasReceber;
 	}
 
-	public SituacaoContasReceber getSituacaoContasReceber() {
+	public TipoSituacaoContasReceber getSituacaoContasReceber() {
 		return situacaoContasReceber;
 	}
 
-	public void setSituacaoContasReceber(SituacaoContasReceber situacaoContasReceber) {
+	public void setSituacaoContasReceber(TipoSituacaoContasReceber situacaoContasReceber) {
 		this.situacaoContasReceber = situacaoContasReceber;
 	}
 

@@ -1,6 +1,6 @@
 package br.com.mag.business.enumeration;
 
-public enum SituacaoContasReceber {
+public enum TipoSituacaoContasReceber {
 	QUITADO,
 	ABERTO,
 	ATRASADO;

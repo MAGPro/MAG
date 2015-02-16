@@ -1,5 +1,6 @@
 package br.com.mag.business;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,14 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import br.com.mag.business.enumeration.TipoEndereco;
 
 @Entity
-public class Endereco {
+public class Endereco extends AbstractEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1912505727580353217L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoEndereco;
@@ -25,17 +29,20 @@ public class Endereco {
 	private Integer cep;
 	private String cidade;
 	private String estado;
+	
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipo;
-	@ManyToOne
-	private Cliente clientes;
-	@OneToOne(mappedBy="endereco")
-	private Visita visitas;
 	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Cliente cliente;
 		
+	public Endereco() {
+
+	}
+
 	public Endereco(String logradouro, Integer numero, String complemento,
 			String bairro, Integer cep, String cidade, String estado,
-			TipoEndereco tipo, Cliente clientes, Visita visitas) {
+			TipoEndereco tipo,Cliente cliente) {
 		super();
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -45,8 +52,7 @@ public class Endereco {
 		this.cidade = cidade;
 		this.estado = estado;
 		this.tipo = tipo;
-		this.clientes = clientes;
-		this.visitas = visitas;
+		this.cliente = cliente;
 	}
 
 	public Integer getCodigoEndereco() {
@@ -121,4 +127,9 @@ public class Endereco {
 		this.tipo = tipo;
 	}
 
+	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return codigoEndereco;
+	}
 }

@@ -2,8 +2,6 @@ package br.com.mag.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -12,9 +10,9 @@ import org.primefaces.context.RequestContext;
 
 import br.com.mag.business.Cliente;
 import br.com.mag.business.Endereco;
-import br.com.mag.business.dao.EnderecoDAO;
 import br.com.mag.business.dao.ClienteDAO;
 import br.com.mag.business.dao.DAOException;
+import br.com.mag.business.enumeration.TipoEndereco;
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @ManagedBean
@@ -29,7 +27,7 @@ public class ClienteMB implements Serializable {
 	private List<Cliente> clientes;
 	
 	private Endereco endereco;
-	private EnderecoDAO EnderecoDao = new EnderecoDAO();
+
 	
 
 	public ClienteMB() {
@@ -73,20 +71,37 @@ public class ClienteMB implements Serializable {
 
 		RequestContext context = RequestContext.getCurrentInstance();
 
-		if (cliente == null) {
-			//enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
-		} else if (cliente.getCodigoCliente() != null) {
-			clienteDao.editar(cliente);
-			//context.addCallbackParam("Categoria atualizada com sucesso", true);
-			
-		} else {
-			clienteDao.salvar(cliente);
-			//context.addCallbackParam("Categoria cadastrada com sucesso", true);
-			context.execute("confirmation.show();");
-		}
-		
+		try {
+			if (cliente == null) {
+				// enviar mensagem de alerta/erro
+
+			} else if (cliente.getCodigoCliente() == null) {
+
+				List<Endereco> lista = new ArrayList<Endereco>();
+				lista.add(endereco);
+				cliente.setEnderecos(lista);
+				clienteDao.salvar(cliente);
+				// context.addCallbackParam("Cliente cadastrado com sucesso",
+				// true);
+				context.execute("confirmation.show();");
+
+			} else {
+				if (clienteDao.getPrimaryKey(cliente) == null) {
+					throw new Exception(
+							"Erro ao atualizar, registro não encontrado");
+				}
+
+				clienteDao.editar(cliente);
+				// context.addCallbackParam("Cliente atualizado com sucesso",
+				// true);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			}
+
 		return "/buscaCliente.faces?faces-redirect=true";
-	
+
 	}
 
 	public String editar() throws DAOException {
@@ -106,6 +121,11 @@ public class ClienteMB implements Serializable {
 	// Carregar enumerador
 	public TipoSituacaoCliente[] getTipoSituacoes() {
 		return TipoSituacaoCliente.values();
+	}
+	
+	// Carregar enumerador TipoEndereco
+	public TipoEndereco[] getTipoEnderecos() {
+		return TipoEndereco.values();
 	}
 	
 	public String excluir() throws DAOException {

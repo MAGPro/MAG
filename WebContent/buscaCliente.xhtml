@@ -4,50 +4,35 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta charset="UTF-8" />
-	<title>Buscar Cliente</title>
-</h:head>
-<h:body>
-	<ui:include src="/pages/menu.xhtml" />
-	<h:form prependId="false">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-		<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita"
-			rowClasses="normal" headerClass="tituloFormulario"
-			styleClass="tabelaGC">
-			<f:facet name="header">
-				<p:outputLabel value="Cadastro de Clientes" />
-			</f:facet>
+<ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+		<h:form prependId="false">
 
-			<p:outputLabel for="nome" value="Nome" />
-			<p:inputText id="nome" value="#{clienteMB.cliente.nome}" />
-			<p:outputLabel for="cpf" value="CPF" />
-			<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
-				mask="999.999.999-99" />
+			<div align="center">
+			<h4><p:outputLabel value="Lista de Clientes" /></h4>
+			</div>
 
-			<p:outputLabel value="Situação Cliente" />
-			<h:panelGroup>
-				<p:selectOneMenu id="situacaoCliente"
-					value="#{clienteMB.cliente.situacaoCliente}">
-					<f:selectItems var="s" value="#{clienteMB.tipoSituacoes}"
-						itemValue="#{s}" itemLabel="#{s.label}" />
-				</p:selectOneMenu>
-			</h:panelGroup>
+			<p:dataTable var="cliente" value="#{clienteMB.clientes}"
+				paginator="true" rows="3" paginatorPosition="bottom"
+				widgetVar="clienteT">
 
-			<p:commandButton value="Buscar" action="#{clienteMB.buscar}" />
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Buscar por:" />
+						<p:inputText id="globalFilter" onkeyup="PF('clienteT').filter()"
+							placeholder="Nome, cpf ou situação" />
+					</p:outputPanel>
+				</f:facet>
 
-		</p:panelGrid>
 
-		<p:panel id="lista">
-			<p:dataTable var="cliente" value="#{clienteMB.clientes}">
-				<p:column headerText="CodigoCliente">
-					<p:outputLabel value="#{cliente.codigoCliente}" />
-				</p:column>
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" filterBy="#{cliente.nome}" filterStyle=""
+					filterMatchMode="contains">
 					<p:outputLabel value="#{cliente.nome}" />
 				</p:column>
-				<p:column headerText="CPF">
+				<p:column filterBy="#{cliente.cpf}" headerText="CPF">
 					<p:outputLabel value="#{cliente.cpf}" />
 				</p:column>
 				<p:column headerText="Tel. Cel.">
@@ -56,25 +41,38 @@
 				<p:column headerText="Email">
 					<p:outputLabel value="#{cliente.email}" />
 				</p:column>
-				<p:column headerText="Situação">
-					<p:outputLabel value="#{cliente.situacaoCliente}" />
-				</p:column>
 
+				<p:column filterBy="#{cliente.situacaoCliente}"
+					headerText="Situação">
+					<center><p:outputLabel value="#{cliente.situacaoCliente}"/></center>
+				</p:column>
+				
 				<p:column headerText="Ações" style="text-align: center">
+			
+				<p:commandLink action="#{categoriaMB.visualizar}" >
+					<p:graphicImage url="/resources/img/glyphicons_027_search.png" title="Visualizar" />				
+					<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				
+				<h:outputText value="   " />
+			
+				<p:commandLink action="#{categoriaMB.editar}" >
+					<p:graphicImage url="/resources/img/glyphicons_030_pencil.png" title="Editar" />				
+					<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				
+				<h:outputText value="   " />
+				<p:commandLink action="#{categoriaMB.excluir}" >
+					<p:graphicImage url="/resources/img/glyphicons_016_bin.png" title="Excluir" />					
+					<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteMB.cliente}" />
+				</p:commandLink>	
+			 	</p:column>
 
-					<p:commandLink value="Editar" action="#{clienteMB.editar}">
-						<f:setPropertyActionListener value="#{cliente}"
-							target="#{clienteMB.cliente}" />
-					</p:commandLink>
-				/
-				<p:commandLink value="Excluir" action="#{clienteMB.excluir}">
-						<f:setPropertyActionListener value="#{cliente}"
-							target="#{clienteMB.cliente}" />
-					</p:commandLink>
-				</p:column>
 			</p:dataTable>
-		</p:panel>
 
-	</h:form>
-</h:body>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
 </html>

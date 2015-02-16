@@ -1,20 +1,21 @@
 package br.com.mag.business;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
@@ -26,23 +27,25 @@ public class Cliente extends AbstractEntity{
 	private static final long serialVersionUID = -3164037012965263022L;
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer codigoCliente;
+	private Integer codigoCliente = null;
 	private String nome;
 	private String cpf;
 	private Integer rg;
+	
 	@Temporal(TemporalType.DATE)
 	private Calendar dataNascimento;
+	
 	private String telResidencial;
 	private String telComercial;
 	private String telMovel;
 	private String email;
+	
 	@Enumerated(EnumType.STRING)
 	private TipoSituacaoCliente situacaoCliente;
-	@Transient
-	private String dataNascimentoString;
-	@OneToMany(mappedBy="clientes")
-	private List<Endereco> enderecos;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "cliente_codigoCliente")
+	private List<Endereco> enderecos;
 	
 	public Cliente(String nome, String cpf, Integer rg,
 			Calendar dataNascimento, String telResidencial,
@@ -136,18 +139,6 @@ public class Cliente extends AbstractEntity{
 	public Integer getId() {
 		// TODO Auto-generated method stub
 		return codigoCliente;
-	}
-
-	public String getDataNascimentoString() {
-		if(this.dataNascimento != null){
-			DateFormat d = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			dataNascimentoString = d.format(this.dataNascimento.getTime());
-		}
-		return dataNascimentoString;
-	}
-
-	public void setDataNascimentoString(String dataNascimentoString) {
-		this.dataNascimentoString = dataNascimentoString;
 	}
 
 }

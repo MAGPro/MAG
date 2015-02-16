@@ -5,24 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mag.business.SubCategoria;
+import br.com.mag.business.dao.CategoriaDAO;
 import br.com.mag.business.dao.DAOException;
 import br.com.mag.business.dao.SubCategoriaDAO;
 
 @ManagedBean
+//@ViewScoped
+@SessionScoped
 public class SubCategoriaMB implements Serializable{
-	
 
-	private static final long serialVersionUID = 4837148550691075343L;
-	
+
+	private static final long serialVersionUID = 1060409736908492398L;
 	private SubCategoriaDAO subCategoriaDAO = new SubCategoriaDAO();
 	private SubCategoria subCategoria;
 	private List<SubCategoria> subCategorias;
-
+	private Integer categoriaSelecionada;
+	
+	public Integer getCategoriaSelecionada() {
+		return categoriaSelecionada;
+	} 
+	
+	public void setCategoriaSelecionada(Integer categoriaSelecionada) {
+		this.categoriaSelecionada = categoriaSelecionada;
+	}
 
 	public SubCategoriaMB() {
-		// categoriasDisponiveis = new ArrayList<Categoria>();
 		subCategoria = new SubCategoria();
 		subCategorias = new ArrayList<SubCategoria>();
 	}
@@ -48,20 +59,66 @@ public class SubCategoriaMB implements Serializable{
 		}
 		return subCategorias;
 	}
-
+	
+	
+	public void enviarCat(){
+		
+		subCategoria.setCategoria(new CategoriaDAO().getPrimaryKey(categoriaSelecionada));	
+		
+	}
+	
 	public String salvar() throws DAOException {
+	
+		if (subCategoria.getDescricao() == null) {
+			//enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
+		} else if (subCategoria.getCodigoSubCategoria() != null) {
+			//System.out.println(" Salvando "+ subCategoria.getDescricao());
+			subCategoriaDAO.editar(subCategoria);
+		
+			} else {
+				subCategoriaDAO.salvar(subCategoria);				
+			}
+		subCategoria = null;
+		return "/buscaSubCategoria.faces";
+	}
 
-		subCategoriaDAO.salvar(subCategoria);
+	public String editar() throws DAOException {
+		System.out.println(" SubCategoria "+ subCategoria.getDescricao());
 
-		return "Salvando subcategoria..";
+		//subCategoria = subCategoriaDAO.getPrimaryKey(subCategoria);
+		System.out.println(" SubCategoria " + subCategoria.getCodigoSubCategoria());
+		System.out.println(" SubCategoria "+ subCategoria.getDescricao());
+		System.out.println("Categoria" + subCategoria.getCategoria());
+		
+		return "/cadastraSubCategoria.faces";
+	}
+	
+	public String cadastrar(){
+				
+		return "/cadastraSubCategoria.faces?faces-redirect=true";
+	}
+	
+	public String visualizar() throws DAOException {
+
+		subCategoria = subCategoriaDAO.getPrimaryKey(subCategoria);
+		return "/visualizaSubCategoria.faces";
 	}
 
 	public String excluir() throws DAOException {
-
-		subCategoriaDAO.excluir(subCategoria);
-
-		return "Excluindo subcategoria..";
+		if (subCategoria == null) {
+			// enviar mensagem de alerta/erro ("Não é possivel excluir categoria nula!");
+		} else {
+			subCategoriaDAO.excluir(subCategoria);
+		}
+	
+		return "/buscaSubCategoria.faces?faces-redirect=true";
 	}
-
+	
+	
+	
+public String voltar() {
+		
+		return "/buscaSubCategoria.faces?faces-redirect=true";
+	}
 
 }

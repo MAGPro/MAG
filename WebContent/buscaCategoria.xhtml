@@ -8,27 +8,53 @@
 
 <ui:composition template="/pages/_template.xhtml">
 	<ui:define name="conteudo">
-	<h:form prependId="false">
-	<div align = "center">
+	<table>
 	<p:messages id= "messages" showDetail="true" autoUpdate="true" closable="true"/>
+	<td rowspan="3" align="center">
+		<h:form id="form">
+			<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita"
+				rowClasses="normal" headerClass="tituloFormulario"
+				styleClass="tabelaGC">
+				<f:facet name="header">
+					<p:outputLabel value="Buscar categoria" />
+				</f:facet>
 	
-	<h4><p:outputLabel value="Lista de Categorias" /></h4>
+				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{categoriaMB.categoria.descricao}" size="40" />
+	
+				<p:outputLabel value="Ativo:" for="ativo" />
+				<p:selectBooleanCheckbox id="ativo"
+					value="#{categoriaMB.categoria.ativo}" />
+	
+				<h:outputText value="" />
+				<p:commandButton value="Buscar" action="#{categoriaMB.buscar}" update="form"/>
+	
+			</p:panelGrid>
+	
+		</h:form>
+		</td>
+		<td rowspan="3"/>
+		<td rowspan="3"/>
+		<td rowspan="3"/>
+		<td rowspan="3"/>
+		<td rowspan="3"/>
+		<td rowspan="3" align="center">
 				<p:commandLink action="#{categoriaMB.cadastrar}" >
 					<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
 				</p:commandLink>
-	
-	</div>
+		</td>		
+		</table>
+
 		
 	<h:panelGrid></h:panelGrid>
 	<h:panelGrid></h:panelGrid>
-	
-		<p:dataTable var="categoria" value="#{categoriaMB.categorias}" paginator="true" rows="10" paginatorPosition="bottom">
-		
-			<p:column headerText="Id" filterBy="#{categoria.codigoCategoria}">
+		<p:dataTable var="categoria" value="#{categoriaMB.categorias}">
+			<p:column headerText="Id">
 				<h:outputText value="#{categoria.codigoCategoria}" />
 			</p:column>
 	
-			<p:column headerText="Descrição" filterBy="#{categoria.descricao}">
+			<p:column headerText="Descrição">
 				<h:outputText value="#{categoria.descricao}" />
 			</p:column>
 	
@@ -61,7 +87,7 @@
 			</p:column>
 		</p:dataTable>
 
-	</h:form>
+
 	</ui:define>
 	</ui:composition>	
 </html>

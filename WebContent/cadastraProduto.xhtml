@@ -8,52 +8,29 @@
      
   <ui:composition template="/pages/_template.xhtml">
 	<ui:define name="conteudo">
-	<h:form>
-			<p:messages id="messages" autoUpdate="true"
-					closable="true" />
-		</h:form>
-	
-    	<div align="center">
+    
         <h:form prependId="false">
         	<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita" rowClasses="normal" headerClass="tituloFormulario" styleClass="tabelaGC">
             <f:facet name="header">
-            <p:outputLabel value="Cadastro de produto"/>
+            <p:outputLabel value="Cadastro de produtos"/>
             </f:facet>
             
            	<p:outputLabel value="Descrição:" for="descricao"/>
-			<p:inputText id="descricao" size="40" value="#{produtoMB.produto.descricao}" required="true"/>
-			
+			<p:inputText id="descricao" size="40" value="#{produtoMB.produto.descricao}"/>
 			
 			<p:outputLabel value="Categoria: " for="categoria"/>
 			<h:panelGroup>
-			
-				<p:selectOneMenu id="categoria" value="#{produtoMB.categoriaSelecionada}" required="true">
-					<f:selectItem itemLabel="Selecione uma categoria"/>
+				<p:selectOneMenu id="categoria" value="#{categoriaMB.categorias}">
 					<f:selectItems value="#{categoriaMB.categorias}" var="categoria" 
-					itemLabel="#{categoria.descricao}" itemValue="#{categoria.codigoCategoria}" />	
-												
+					itemLabel="#{categoria.descricao}" itemValue="#{categoria.id}" />								
 				</p:selectOneMenu>
-			
 			</h:panelGroup>
-						
-			<p:outputLabel value="Subcategoria: " for="subCategoria" required="true"/>
+			
+			<p:outputLabel value="Subcategoria: " for="subCategoria"/>
 			<h:panelGroup>
-				<p:selectOneMenu id="subCategoria" value="#{produtoMB.subCategoriaSelecionada}">
-					<f:selectItem itemLabel="Selecione uma subcategoria"/>
+				<p:selectOneMenu id="subCategoria" value="#{subCategoriaMB.subCategorias}">
 					<f:selectItems value="#{subCategoriaMB.subCategorias}" var="subCategoria" 
-					itemLabel="#{subCategoria.descricao}" itemValue="#{subCategoria.codigoSubCategoria}" />		
-					<p:ajax listener="#{produtoMB.enviarSubCat}"/>
-											
-				</p:selectOneMenu>
-			</h:panelGroup>
-			
-			<p:outputLabel value="Gênero: " for="genero"/>
-			<h:panelGroup>
-				<p:selectOneMenu id="genero"
-								value="#{produtoMB.produto.genero}" required="true">
-								<f:selectItem itemLabel="Selecione um gênero"/>
-								<f:selectItems var="s" value="#{produtoMB.tipoGenero}"
-									itemValue="#{g}" itemLabel="#{g.label}" />
+					itemLabel="#{subCategoria.descricao}" itemValue="#{subCategoria.id}" />								
 				</p:selectOneMenu>
 			</h:panelGroup>
 			
@@ -70,24 +47,37 @@
 			
 			<p:outputLabel value="Valor custo(R$): " for="valorCusto"/>
 			<h:panelGroup>
-				<p:inputText id="valorCusto" size="8" value="#{produtoMB.produto.valorCusto}" required="true"/>
+				<p:inputText id="valorCusto" size="8" value="#{produtoMB.produto.valorCusto}"/>
 				
 				<p:outputLabel value="Valor venda(R$): " for="valorVenda"/>
-				<p:inputText id="valorVenda" size="8" value="#{produtoMB.produto.valorVenda}" required="true"/>
+				<p:inputText id="valorVenda" size="8" value="#{produtoMB.produto.valorVenda}"/>
 			</h:panelGroup>
 			
-			<p:outputLabel value="Ativo:" for="ativo" />
-					<p:selectBooleanCheckbox id="ativo"
-							value="#{produtoMB.produto.ativo}" />
 				<h:outputText value=""/>
-				<p:commandButton value="Salvar" actionListener="#{messagesViewMB.info}" action="#{produtoMB.salvar}"/>
-			
+				<p:commandButton value="Salvar" action="#{produtoMB.salvar}"/>
 			
 			</p:panelGrid>
+			<p:dataTable var="produto" value="#{produtoMB.produtos}">
+			<p:column headerText="CodigoProduto">
+				<p:outputLabel value="#{produto.codigoProduto}"></p:outputLabel>
+			</p:column>
 			
+			<p:column headerText="Nome">
+				<p:outputLabel value="#{produto.descricao}"></p:outputLabel>
+			</p:column> 
+			
+			<p:column headerText="Complemento">
+				<p:outputLabel value="#{produto.complemento}"></p:outputLabel>
+			</p:column>
+			
+			<p:column headerText="Unidade">
+				<p:outputLabel value="#{produto.unidade}"></p:outputLabel>
+			</p:column>
+			
+		</p:dataTable>
 			
         </h:form>
-       </div>
+       
 	</ui:define>
 	</ui:composition>	
 </html>

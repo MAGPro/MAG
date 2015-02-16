@@ -21,7 +21,6 @@ public class SubCategoria extends AbstractEntity{
 	private Categoria categoria;
 	private boolean ativo = true;
 	
-	
 	public SubCategoria(){
 		
 	}
@@ -32,10 +31,10 @@ public class SubCategoria extends AbstractEntity{
 		this.categoria = categoria;
 	}
 	
-	public Integer getCodigoSubCategoria() {
+	public Integer getCodigoCategoria() {
 		return codigoSubCategoria;
 	}
-	public void setCodigoSubCategoria(Integer codigoCategoria) {
+	public void setCodigoCategoria(Integer codigoCategoria) {
 		this.codigoSubCategoria = codigoCategoria;
 	}
 	public String getDescricao() {
@@ -51,7 +50,6 @@ public class SubCategoria extends AbstractEntity{
 		this.categoria = categoria;
 	}
 	
-	
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -64,5 +62,8 @@ public class SubCategoria extends AbstractEntity{
 	public Integer getId() {
 		// TODO Auto-generated method stub
 		return codigoSubCategoria;
-	}	
+	}
+	
+	
+
 }

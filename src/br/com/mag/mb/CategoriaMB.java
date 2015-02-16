@@ -78,7 +78,7 @@ public class CategoriaMB implements Serializable {
 	
 	public String cadastrar(){
 
-		return "/cadastraCategoria.faces?faces-redirect=true";
+		return "/cadastraCategoria.faces";
 	}
 	
 	public String visualizar() throws DAOException {
@@ -108,7 +108,7 @@ public class CategoriaMB implements Serializable {
 	
 	public String voltar() {
 		
-		return "/buscaCategoria.faces?faces-redirect=true";
+		return "/buscaCategoria.faces";
 	}
 
 	

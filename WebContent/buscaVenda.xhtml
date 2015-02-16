@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+		</h:form>
+		<center><h3>Vendas de Produtos</h3></center>
+		<p:dataTable value="#{vendaMB.vendas}" var="venda">
+
+			<p:column headerText="Codigo">
+				<h:outputText value="#{venda.codigoVenda}" />
+			</p:column>
+			<p:column headerText="Cliente">
+				<h:outputText value="#{venda.cliente.nome}" />
+			</p:column>
+			<p:column headerText="Data de Emissão">
+				<h:outputText value="#{venda.dataVenda.time}" />
+			</p:column>
+			<p:column headerText="Forma de Pagamento">
+				<h:outputText value="#{vendaMB.venda.formaPagamento}" />
+			</p:column>
+			
+			<p:column headerText="Valor Total">
+				<h:outputText value="#{venda.valorTotal}">
+					<f:convertNumber pattern="R$ #0.00" />
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>
+</html>

@@ -8,11 +8,8 @@
 
 	<ui:composition template="/pages/_template.xhtml">
 	<ui:define name="conteudo">
-		<h:form>
-			<p:messages id="messages" autoUpdate="true"
-					closable="true" />
-		</h:form>
-	
+
+	<div align="center">
 		<h:form prependId="false">
 		
 			<h:inputHidden value="#{categoriaMB.categoria.codigoCategoria}" />
@@ -39,6 +36,7 @@
 	
 			</p:panelGrid>
 		</h:form>
+	</div>
 	</ui:define>
 	</ui:composition>	
 </html>

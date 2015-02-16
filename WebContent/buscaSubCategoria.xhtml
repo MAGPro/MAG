@@ -8,54 +8,29 @@
 
 <ui:composition template="/pages/_template.xhtml">
 	<ui:define name="conteudo">
-	<table>
+	<h:form prependId="false">
+		
+	<div align="center">
 	<p:messages id= "messages" showDetail="true" autoUpdate="true" closable="true"/>
-	<td rowspan="3" align="center">
-		<h:form id="form">
-			<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita"
-				rowClasses="normal" headerClass="tituloFormulario"
-				styleClass="tabelaGC">
-				<f:facet name="header">
-					<p:outputLabel value="Buscar subCategoria" />
-				</f:facet>
-	
-				<p:outputLabel value="Descrição:" for="descricao" />
-				<p:inputText id="descricao"
-					value="#{subCategoriaMB.subCategoria.descricao}" size="40" />
-	
-				<p:outputLabel value="Ativo:" for="ativo" />
-				<p:selectBooleanCheckbox id="ativo"
-					value="#{subCategoriaMB.subCategoria.ativo}" />
-	
-				<h:outputText value="" />
-				<p:commandButton value="Buscar" action="#{subCategoriaMB.buscar}" update="form"/>
-	
-			</p:panelGrid>
-	
-		</h:form>
-		</td>
-		<td rowspan="3"/>
-		<td rowspan="3"/>
-		<td rowspan="3"/>
-		<td rowspan="3"/>
-		<td rowspan="3"/>
-		<td rowspan="3" align="center">
+	<h4><p:outputLabel value="Lista de Subcategorias" /></h4>
 				<p:commandLink action="#{subCategoriaMB.cadastrar}" >
 					<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
 				</p:commandLink>
-		</td>		
-		</table>
-
-		
-	<h:panelGrid></h:panelGrid>
-	<h:panelGrid></h:panelGrid>
-		<p:dataTable var="subCategoria" value="#{subCategoriaMB.subCategorias}">
-			<p:column headerText="Id">
-				<h:outputText value="#{subCategoria.codigoSubCategoria}" />
-			</p:column>
+	</div>
 	
-			<p:column headerText="Descrição">
-				<h:outputText value="#{subCategoria.descricao}" />
+
+	<h:panelGrid></h:panelGrid>
+	<h:panelGrid></h:panelGrid>
+
+		<p:dataTable var="subCategoria" value="#{subCategoriaMB.subCategorias}" paginator="true" rows="10" paginatorPosition="bottom">
+		
+			<p:column filterBy="#{subCategoria.descricao}" headerText="Descrição" filterMatchMode="contains">
+            	<h:outputText value="#{subCategoria.descricao}" />
+        	</p:column>
+			
+			<p:column headerText="Categoria">
+				<h:outputText
+					value="#{subCategoria.categoria.descricao}" />
 			</p:column>
 	
 			<p:column headerText="Situação">
@@ -86,8 +61,7 @@
 			
 			</p:column>
 		</p:dataTable>
-
-
+	</h:form>
 	</ui:define>
 	</ui:composition>	
 </html>

@@ -25,5 +25,11 @@ public class CategoriaDAO extends GenericDAO <Categoria> {
 		
 		return categorias;
 	} 
+	
+	public void buscarCategoria(Integer id){
+		getPrimaryKey(id);
+		
+	}
+
 
 }

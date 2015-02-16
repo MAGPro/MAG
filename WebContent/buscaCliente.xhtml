@@ -5,12 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<meta charset="UTF-8" />
-	<title>Buscar Cliente</title>
-</h:head>
-<h:body>
-	<ui:include src="/pages/menu.xhtml" />
+
+<ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+
 	<h:form prependId="false">
 
 		<p:panelGrid columns="2" columnClasses="colunaEsquerda,colunaDireita"
@@ -76,5 +74,6 @@
 		</p:panel>
 
 	</h:form>
-</h:body>
+</ui:define>
+	</ui:composition>
 </html>

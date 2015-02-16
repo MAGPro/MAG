@@ -12,7 +12,7 @@
 			<p:messages id="messages" autoUpdate="true"
 					closable="true" />
 		</h:form>
-	
+		<div align="center">
 		<h:form prependId="false">
 		
 			<h:inputHidden value="#{categoriaMB.categoria.codigoCategoria}" />
@@ -22,7 +22,7 @@
 					styleClass="tabelaGC">
 	
 				<f:facet name="header">
-					<p:outputLabel value="Cadastro de categorias" />
+					<p:outputLabel value="Cadastro de categoria" />
 				</f:facet>
 		
 				<p:outputLabel value="Descrição:" for="descricao" />
@@ -40,6 +40,7 @@
 	
 			</p:panelGrid>
 		</h:form>
+		</div>
 	</ui:define>
 	</ui:composition>	
 </html>

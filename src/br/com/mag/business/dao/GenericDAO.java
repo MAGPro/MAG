@@ -57,9 +57,9 @@ public abstract class GenericDAO<T extends AbstractEntity> implements
 		return entityManager.find(persistentClass, entity.getId());
 	}
 	
-	/*public T getPrimaryKey(K key){
-		return entityManager.find(persistentClass, key);
-	}*/
+	public T getPrimaryKey(Integer codigo){
+		return entityManager.find(persistentClass, codigo);
+	}
 
 	public EntityManager getEntityManager(){
 		return entityManager;

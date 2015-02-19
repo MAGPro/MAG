@@ -11,7 +11,7 @@
 	<h:form prependId="false">
 	
 	<div align="center">
-		<p:messages id= "messages" autoUpdate="true" closable="true"/>
+		<p:messages id= "messages" showDetail="true"  autoUpdate="true" closable="true"/>
 		
 		<h4><p:outputLabel value="Lista de Produtos" /></h4>
 
@@ -23,7 +23,7 @@
 	
 		<h:panelGrid></h:panelGrid>
 			
-		<p:dataTable var="produto" value="#{produtoMB.produtos}" paginator="true" rows="10" paginatorPosition="bottom">
+		<p:dataTable var="produto" value="#{produtoMB.produtos}" paginator="true" rowsPerPageTemplate="5,10,15" rows="10" paginatorPosition="bottom" >
 			<p:column headerText="Id">
 				<h:outputText value="#{produto.codigoProduto}" />
 			</p:column>
@@ -31,7 +31,16 @@
 			<p:column filterBy="#{produto.descricao}" headerText="Descrição" filterMatchMode="contains">
 				<h:outputText value="#{produto.descricao}" />
 			</p:column>
-	
+			<p:column headerText="Categoria">
+				<h:outputText
+					value="#{produto.subCategoria.categoria.descricao}" />
+			</p:column>
+			
+			<p:column headerText="Subcategoria">
+				<h:outputText
+					value="#{produto.subCategoria.descricao}" />
+			</p:column>'
+		
 			<p:column headerText="Situação">
 				<h:outputText
 					value="#{produto.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
@@ -59,6 +68,8 @@
 				</p:commandLink>
 			
 			</p:column>
+			
+			
 		</p:dataTable>
 
 	 </h:form>

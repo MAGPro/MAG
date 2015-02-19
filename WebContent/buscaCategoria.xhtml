@@ -13,26 +13,34 @@
 	<p:messages id= "messages" showDetail="true" autoUpdate="true" closable="true"/>
 	
 	<h4><p:outputLabel value="Lista de Categorias" /></h4>
-				<p:commandLink action="#{categoriaMB.cadastrar}" >
-					<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
-				</p:commandLink>
+		<p:commandLink action="#{categoriaMB.cadastrar}" >
+			<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
+		</p:commandLink>
 	
 	</div>
 		
 	<h:panelGrid></h:panelGrid>
 	<h:panelGrid></h:panelGrid>
 	
-		<p:dataTable var="categoria" value="#{categoriaMB.categorias}" paginator="true" rows="10" paginatorPosition="bottom">
+		<p:dataTable var="categoria" value="#{categoriaMB.categorias}" paginator="true" rows="10" paginatorPosition="bottom" widgetVar="categoriaT">
 		
-			<p:column headerText="Id" filterBy="#{categoria.codigoCategoria}">
+		<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Buscar por:" />
+						<p:inputText id="globalFilter" onkeyup="PF('categoriaT').filter()"
+							placeholder="Descrição ou situação" />
+					</p:outputPanel>
+				</f:facet>
+		
+			<p:column headerText="Id">
 				<h:outputText value="#{categoria.codigoCategoria}" />
 			</p:column>
 	
-			<p:column headerText="Descrição" filterBy="#{categoria.descricao}">
+			<p:column headerText="Descrição" filterBy="#{categoria.descricao}" filterMatchMode="contains">
 				<h:outputText value="#{categoria.descricao}" />
 			</p:column>
 	
-			<p:column headerText="Situação">
+			<p:column headerText="Situação" filterBy="#{categoria.ativo}" filterMatchMode="contains" >
 				<h:outputText
 					value="#{categoria.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
 			</p:column>

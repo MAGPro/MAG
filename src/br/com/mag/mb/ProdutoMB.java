@@ -4,39 +4,41 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import br.com.mag.business.Categoria;
 import br.com.mag.business.Produto;
+import br.com.mag.business.SubCategoria;
 import br.com.mag.business.dao.CategoriaDAO;
 import br.com.mag.business.dao.DAOException;
 import br.com.mag.business.dao.ProdutoDAO;
 import br.com.mag.business.dao.SubCategoriaDAO;
 import br.com.mag.business.enumeration.TipoGenero;
-import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @ManagedBean
+//@ViewScoped
+@SessionScoped
 public class ProdutoMB implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 901114338254703798L;
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
 	private Produto produto;
-	//private List<Categoria> categoriasDisponiveis;
 	private List<Produto> produtos;
 	private Integer categoriaSelecionada;
 	private Integer subCategoriaSelecionada;
 	
+
+	private List<SubCategoria> subCategorias;
 	
 		public ProdutoMB() {
-	       // categoriasDisponiveis = new ArrayList<Categoria>();
 	        produto = new Produto();
 	        produtos = new ArrayList<Produto>();
+	        
 	    }
 		
 		public Integer getCategoriaSelecionada() {
@@ -76,20 +78,55 @@ public class ProdutoMB implements Serializable{
 			}
 			return produtos;
 		}
+	    
+	    
+	    
+	    public void enviarSubCat(){
+	    	System.out.println(subCategoriaSelecionada);
+			produto.setSubCategoria(new SubCategoriaDAO().getPrimaryKey(subCategoriaSelecionada));	
+			System.out.println(produto.getSubCategoria().getDescricao());
+		}
+	    
+	    public void enviarCat(){
+			
+	    	System.out.println(categoriaSelecionada);
+	    	subCategorias = null;
+			getSubCategorias();
+			
+		}
+	    
+	    public List<SubCategoria> getSubCategorias() {
+	    	
+	    
+		//	if (categoriaSelecionada != null) {
+				System.out.println(categoriaSelecionada);
+				if (categoriaSelecionada != null){
+				try {
+					List<SubCategoria> subCategoriaList = produtoDAO.listarSelecionadas(categoriaSelecionada);
+				//	for (SubCategoria subCategoria : subCategoriaList) {
+						subCategorias = subCategoriaList;
+				//	}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	//		} else {
+	//			this.subCategorias = subCategoriaMB.getSubCategorias();
+	//		}
+				}
+			
+			return subCategorias;
+		}
+	    
 
 	 // Carregar enumerador
 		public TipoGenero[] getTipoGenero() {
 			return TipoGenero.values();
 		}
 		
-		public void enviarSubCat(){
-			
-			produto.setSubCategoria(new SubCategoriaDAO().getPrimaryKey(subCategoriaSelecionada));	
-			
-		}
-		
 	    public String salvar() throws DAOException {
 			
+	    	System.out.println(subCategoriaSelecionada);
+	    	System.out.println(produto.getSubCategoria());
 			if (produto == null) {
 				//enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
 			} else if (produto.getCodigoProduto() != null) {
@@ -105,28 +142,24 @@ public class ProdutoMB implements Serializable{
 		public String editar() throws DAOException {
 
 			produto = produtoDAO.getPrimaryKey(produto);
+			categoriaSelecionada = produto.getSubCategoria().getCategoria().getCodigoCategoria();
+			subCategoriaSelecionada = produto.getSubCategoria().getCodigoSubCategoria();		
+			
 
 			return "/cadastraProduto.faces";
 		}
 		
 		public String cadastrar(){
-
 			return "/cadastraProduto.faces?faces-redirect=true";
 		}
 		
 		public String visualizar() throws DAOException {
-
+			
 			produto = produtoDAO.getPrimaryKey(produto);
-
+			categoriaSelecionada = produto.getSubCategoria().getCategoria().getCodigoCategoria();
+			subCategoriaSelecionada = produto.getSubCategoria().getCodigoSubCategoria();		
 			return "/visualizaProduto.faces";
 		}
-		
-//		public String buscar() throws DAOException {
-//
-//			this.produtos = produtoDAO.listar(produto);
-//
-//			return "/buscaProduto.faces";
-//		}
 
 		public String excluir() throws DAOException {
 			if (produto == null) {
@@ -136,11 +169,9 @@ public class ProdutoMB implements Serializable{
 			}
 		
 			return "/buscaProduto.faces?faces-redirect=true";
-
 		}
 		
-		public String voltar() {
-			
+		public String voltar() {			
 			return "/buscaProduto.faces?faces-redirect=true";
 		}
 }

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	 xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:ui="http://java.sun.com/jsf/facelets" >
+     
+  <ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+	<h:form>
+			<p:messages id="messages" autoUpdate="true"
+					closable="true" />
+		</h:form>
+	
+    	<div align="center">
+    	<h4><p:outputLabel value="Visualização do Produto" /></h4>
+        
+        <h:form prependId="false">			
+       
+            
+            <p:tabView>
+			<p:tab title="Produto">
+			<h:panelGrid columns="4" cellpadding="10">
+						
+					  
+           	<p:outputLabel value="Descrição:" for="descricao"/>
+			<p:inputText id="descricao" size="40" value="#{produtoMB.produto.descricao}" readonly="true"/>
+			
+			<p:outputLabel value="Categoria: " for="categoria"/>
+			<h:panelGroup>
+				<p:selectOneMenu id="categoria" value="#{produtoMB.categoriaSelecionada}">
+					<f:selectItem itemLabel="Selecione uma categoria" itemDisabled="true"/>
+					<f:selectItems value="#{categoriaMB.categorias}" var="categoria" 
+					itemLabel="#{categoria.descricao}" itemValue="#{categoria.codigoCategoria}" itemDisabled="true" />													
+				</p:selectOneMenu>			
+			</h:panelGroup>
+			
+			<p:outputLabel value="Complemento:" for="complemento"/>
+			<p:inputText id="complemento" size="40" value="#{produtoMB.produto.complemento}" readonly="true"/>
+			
+						
+			<p:outputLabel value="Subcategoria: " for="subCategoria" />
+			<h:panelGroup>
+				<p:selectOneMenu id="subCategoria" value="#{produtoMB.subCategoriaSelecionada}">
+					<f:selectItem itemLabel="Selecione uma subcategoria" itemDisabled="true"/>
+					<f:selectItems value="#{subCategoriaMB.subCategorias}" var="subCategoria" 
+					itemLabel="#{subCategoria.descricao}" itemValue="#{subCategoria.codigoSubCategoria}" itemDisabled="true" />		
+					<p:ajax listener="#{produtoMB.enviarSubCat}"/>											
+				</p:selectOneMenu>
+			</h:panelGroup>
+			
+			<p:outputLabel value="Gênero: " for="genero"/>
+			<h:panelGroup>
+				<p:selectOneMenu id="genero"
+								value="#{produtoMB.produto.genero}">
+								<f:selectItem itemLabel="Selecione um gênero" itemDisabled="true"/>
+								<f:selectItems var="s" value="#{produtoMB.tipoGenero}"
+									itemValue="#{g}" itemLabel="#{g.label}" itemDisabled="true"/>
+				</p:selectOneMenu>
+			</h:panelGroup>
+			
+						
+			<p:outputLabel value="Unidade de medida: " for="unidade"/>		
+			<p:inputText id="unidade" size="8" value="#{produtoMB.produto.unidade}" readonly="true"/>
+				
+			<p:outputLabel value="Quantidade em Estoque: " for="qtdEstoque"/>
+			<p:inputText id="qtdEstoque" size="8" value="#{produtoMB.produto.qtdEstoque}" readonly="true"/>			
+				
+			<p:outputLabel value="Estoque mínimo: " for="estoqueMinimo"/>
+			<p:inputText id="estoqueMinimo" size="8" value="#{produtoMB.produto.estoqueMinimo}" readonly="true"/>
+		
+			
+			<p:outputLabel value="Valor custo(R$): " for="valorCusto"/>
+		
+				<p:inputText id="valorCusto" size="8" value="#{produtoMB.produto.valorCusto}" readonly="true"/>
+				
+				<p:outputLabel value="Valor venda(R$): " for="valorVenda"/>
+				<p:inputText id="valorVenda" size="8" value="#{produtoMB.produto.valorVenda}" readonly="true"/>
+		
+			
+			<p:outputLabel value="Ativo:" for="ativo" />
+					<p:selectBooleanCheckbox id="ativo"
+							value="#{produtoMB.produto.ativo}" disabled="true"/>
+				<h:outputText value=""/>
+				<h:outputText value=""/>
+			
+		</h:panelGrid>
+		</p:tab>
+		</p:tabView>
+		
+		<p:commandButton value="Voltar" actionListener="#{messagesViewMB.info}" action="#{produtoMB.voltar}"/>	
+	
+        </h:form>
+       </div>
+	</ui:define>
+	</ui:composition>	
+</html>
+

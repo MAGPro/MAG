@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
 import br.com.mag.business.SubCategoria;
 import br.com.mag.business.dao.CategoriaDAO;
@@ -23,6 +22,7 @@ public class SubCategoriaMB implements Serializable{
 	private SubCategoriaDAO subCategoriaDAO = new SubCategoriaDAO();
 	private SubCategoria subCategoria;
 	private List<SubCategoria> subCategorias;
+	
 	private Integer categoriaSelecionada;
 	
 	public Integer getCategoriaSelecionada() {
@@ -83,13 +83,8 @@ public class SubCategoriaMB implements Serializable{
 	}
 
 	public String editar() throws DAOException {
-		System.out.println(" SubCategoria "+ subCategoria.getDescricao());
-
-		//subCategoria = subCategoriaDAO.getPrimaryKey(subCategoria);
-		System.out.println(" SubCategoria " + subCategoria.getCodigoSubCategoria());
-		System.out.println(" SubCategoria "+ subCategoria.getDescricao());
-		System.out.println("Categoria" + subCategoria.getCategoria());
 		
+		categoriaSelecionada = subCategoria.getCategoria().getCodigoCategoria(); 
 		return "/cadastraSubCategoria.faces";
 	}
 	
@@ -101,6 +96,7 @@ public class SubCategoriaMB implements Serializable{
 	public String visualizar() throws DAOException {
 
 		subCategoria = subCategoriaDAO.getPrimaryKey(subCategoria);
+		categoriaSelecionada = subCategoria.getCategoria().getCodigoCategoria(); 
 		return "/visualizaSubCategoria.faces";
 	}
 
@@ -114,9 +110,8 @@ public class SubCategoriaMB implements Serializable{
 		return "/buscaSubCategoria.faces?faces-redirect=true";
 	}
 	
-	
-	
-public String voltar() {
+
+	public String voltar() {
 		
 		return "/buscaSubCategoria.faces?faces-redirect=true";
 	}

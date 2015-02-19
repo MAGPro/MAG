@@ -17,13 +17,20 @@
            
 			<p:outputLabel value="Descrição:" for="descricao"/>
 			<p:inputText id="descricao" value="#{subCategoriaMB.subCategoria.descricao}" size="40" readonly="true"/>
+	
 			<p:outputLabel value="Categoria: " for="categoria"/>
 			<h:panelGroup>
-				<p:selectOneMenu id="categoria" value="#{categoriaMB.categorias}" required="true">
+			
+				<p:selectOneMenu id="categoria" value="#{subCategoriaMB.categoriaSelecionada}">
+					<f:selectItem itemLabel="Selecione uma categoria" itemDisabled="true"/>
 					<f:selectItems value="#{categoriaMB.categorias}" var="categoria" 
-					itemLabel="#{categoria.descricao}" itemValue="#{categoria.id}" itemDisabled="true"/>								
+					itemLabel="#{categoria.descricao}" itemValue="#{categoria.codigoCategoria}" itemDisabled="true"/>	
+					<p:ajax listener="#{subCategoriaMB.enviarCat}"/>							
 				</p:selectOneMenu>
+			
 			</h:panelGroup>
+			
+			
 			<p:outputLabel value="Ativo:" for="ativo" />
 					<p:selectBooleanCheckbox id="ativo"
 							value="#{subCategoriaMB.subCategoria.ativo}" disabled="true"/>

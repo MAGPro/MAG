@@ -1,7 +1,5 @@
 package br.com.mag.business;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,8 +21,8 @@ public class Produto extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private TipoGenero genero;
 	private String complemento;
-	private BigDecimal valorVenda;
-	private BigDecimal valorCusto;
+	private double valorVenda;
+	private double valorCusto;
 	private String unidade;
 	private double estoqueMinimo;
 	private double qtdEstoque;
@@ -38,7 +36,7 @@ public class Produto extends AbstractEntity {
 	}
 	
 	public Produto(String descricao, TipoGenero genero, String complemento,
-			BigDecimal valorVenda, BigDecimal valorCusto, String unidade,
+			double valorVenda, double valorCusto, String unidade,
 			double estoqueMinimo, double qtdEstoque, SubCategoria subcategoria) {
 		super();
 		this.descricao = descricao;
@@ -91,16 +89,16 @@ public class Produto extends AbstractEntity {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public BigDecimal getValorVenda() {
+	public double getValorVenda() {
 		return valorVenda;
 	}
-	public void setValorVenda(BigDecimal valorVenda) {
+	public void setValorVenda(double valorVenda) {
 		this.valorVenda = valorVenda;
 	}
-	public BigDecimal getValorCusto() {
+	public double getValorCusto() {
 		return valorCusto;
 	}
-	public void setValorCusto(BigDecimal valorCusto) {
+	public void setValorCusto(double valorCusto) {
 		this.valorCusto = valorCusto;
 	}
 	public String getUnidade() {

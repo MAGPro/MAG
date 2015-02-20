@@ -23,7 +23,7 @@ public class Endereco extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoEndereco;
 	private String logradouro;
-	private Integer numero;
+	private String numero;
 	private String complemento;
 	private String bairro;
 	private Integer cep;
@@ -40,7 +40,7 @@ public class Endereco extends AbstractEntity {
 
 	}
 
-	public Endereco(String logradouro, Integer numero, String complemento,
+	public Endereco(String logradouro, String numero, String complemento,
 			String bairro, Integer cep, String cidade, String estado,
 			TipoEndereco tipo,Cliente cliente) {
 		super();
@@ -71,11 +71,11 @@ public class Endereco extends AbstractEntity {
 		this.logradouro = logradouro;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 

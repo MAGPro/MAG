@@ -12,7 +12,14 @@
 		<h:form prependId="false">
 
 			<div align="center">
-			<h4><p:outputLabel value="Lista de Clientes" /></h4>
+				<h4>
+					<p:outputLabel value="Lista de Clientes" />
+				</h4>
+				<p:commandLink action="#{clienteMB.cadastrar}">
+					<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png"
+						title="Cadastrar" />
+				</p:commandLink>
+				
 			</div>
 
 			<p:dataTable var="cliente" value="#{clienteMB.clientes}"
@@ -28,8 +35,8 @@
 				</f:facet>
 
 
-				<p:column headerText="Nome" filterBy="#{cliente.nome}" filterStyle=""
-					filterMatchMode="contains">
+				<p:column headerText="Nome" filterBy="#{cliente.nome}"
+					filterStyle="" filterMatchMode="contains">
 					<p:outputLabel value="#{cliente.nome}" />
 				</p:column>
 				<p:column filterBy="#{cliente.cpf}" headerText="CPF">
@@ -44,30 +51,37 @@
 
 				<p:column filterBy="#{cliente.situacaoCliente}"
 					headerText="Situação">
-					<center><p:outputLabel value="#{cliente.situacaoCliente}"/></center>
+					<center>
+						<p:outputLabel value="#{cliente.situacaoCliente}" />
+					</center>
 				</p:column>
-				
+
 				<p:column headerText="Ações" style="text-align: center">
-			
-				<p:commandLink action="#{categoriaMB.visualizar}" >
-					<p:graphicImage url="/resources/img/glyphicons_027_search.png" title="Visualizar" />				
-					<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.cliente}" />
-				</p:commandLink>
-				
-				<h:outputText value="   " />
-			
-				<p:commandLink action="#{categoriaMB.editar}" >
-					<p:graphicImage url="/resources/img/glyphicons_030_pencil.png" title="Editar" />				
-					<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.cliente}" />
-				</p:commandLink>
-				
-				<h:outputText value="   " />
-				<p:commandLink action="#{categoriaMB.excluir}" >
-					<p:graphicImage url="/resources/img/glyphicons_016_bin.png" title="Excluir" />					
-					<f:setPropertyActionListener value="#{cliente}"
+
+					<p:commandLink action="#{clienteMB.editar}">
+						<p:graphicImage url="/resources/img/glyphicons_027_search.png"
+							title="Visualizar" />
+						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clienteMB.cliente}" />
-				</p:commandLink>	
-			 	</p:column>
+					</p:commandLink>
+
+					<h:outputText value="   " />
+
+					<p:commandLink action="#{clienteMB.editar}">
+						<p:graphicImage url="/resources/img/glyphicons_030_pencil.png"
+							title="Editar" />
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteMB.cliente}" />
+					</p:commandLink>
+
+					<h:outputText value="   " />
+					<p:commandLink action="#{clienteMB.excluir}">
+						<p:graphicImage url="/resources/img/glyphicons_016_bin.png"
+							title="Excluir" />
+						<f:setPropertyActionListener value="#{cliente}"
+							target="#{clienteMB.cliente}" />
+					</p:commandLink>
+				</p:column>
 
 			</p:dataTable>
 

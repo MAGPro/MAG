@@ -1,5 +1,6 @@
 package br.com.mag.business;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -17,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.mag.business.enumeration.TipoEndereco;
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @Entity
@@ -46,10 +46,35 @@ public class Cliente extends AbstractEntity{
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_codigoCliente")
-	private List<Endereco> enderecos;
+	private List<Endereco> enderecos = new ArrayList<Endereco>();
 		
 	public Cliente(){
 		this.dataNascimento = new GregorianCalendar();
+		//lista de endereços
+		enderecos = new ArrayList<Endereco>();
+	}
+	
+	
+	public Cliente(String nome, String cpf, Integer rg,
+			Calendar dataNascimento, String telResidencial,
+			String telComercial, String telMovel, String email,
+			TipoSituacaoCliente situacaoCliente, List<Endereco> enderecos) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.dataNascimento = dataNascimento;
+		this.telResidencial = telResidencial;
+		this.telComercial = telComercial;
+		this.telMovel = telMovel;
+		this.email = email;
+		this.situacaoCliente = situacaoCliente;
+		this.enderecos = enderecos;
+	}
+
+
+	public void adicionarEndereco(Endereco endereco){
+		this.enderecos.add(endereco);
 	}
 	
 	public Integer getCodigoCliente() {

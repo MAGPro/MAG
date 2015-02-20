@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.primefaces.context.RequestContext;
 
@@ -16,24 +17,22 @@ import br.com.mag.business.enumeration.TipoEndereco;
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
 
 @ManagedBean
+@SessionScoped
 public class ClienteMB implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7247920166232548053L;
 	
-	private Cliente cliente;
+	private Cliente cliente = new Cliente();
 	private ClienteDAO clienteDao = new ClienteDAO();
 	private List<Cliente> clientes;
 	
-	private Endereco endereco;
-
+	private Endereco endereco = new Endereco();
 	
 
 	public ClienteMB() {
 		clientes = new ArrayList<Cliente>();
-		cliente = new Cliente();
-		endereco = new Endereco();
 	}
 
 	public Cliente getCliente() {
@@ -66,6 +65,12 @@ public class ClienteMB implements Serializable {
 		}
 		return clientes;
 	}
+	
+	public void adicionarEndereco() {
+		
+		cliente.adicionarEndereco(endereco);
+		endereco = new Endereco();
+	}
 
 	public String salvar() throws DAOException {
 
@@ -77,12 +82,7 @@ public class ClienteMB implements Serializable {
 
 			} else if (cliente.getCodigoCliente() == null) {
 
-				List<Endereco> lista = new ArrayList<Endereco>();
-				lista.add(endereco);
-				cliente.setEnderecos(lista);
 				clienteDao.salvar(cliente);
-				// context.addCallbackParam("Cliente cadastrado com sucesso",
-				// true);
 				context.execute("confirmation.show();");
 
 			} else {
@@ -92,8 +92,7 @@ public class ClienteMB implements Serializable {
 				}
 
 				clienteDao.editar(cliente);
-				// context.addCallbackParam("Cliente atualizado com sucesso",
-				// true);
+
 			}
 
 		} catch (Exception e) {
@@ -107,8 +106,19 @@ public class ClienteMB implements Serializable {
 	public String editar() throws DAOException {
 
 		cliente = clienteDao.getPrimaryKey(cliente);
-
 		return "/cadastraCliente.faces";
+	}
+	
+	public String cadastrar(){
+
+		return "/cadastraCliente.faces?faces-redirect=true";
+	}
+	
+	public String visualizar() throws DAOException {
+
+		cliente = clienteDao.getPrimaryKey(cliente);
+
+		return "/visualizaCliente.faces";
 	}
 
 /*	public String buscar() throws DAOException {

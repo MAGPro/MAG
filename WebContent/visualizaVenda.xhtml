@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	 xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:ui="http://java.sun.com/jsf/facelets" >
+     
+  <ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+	<h:form>
+			<p:messages id="messages" autoUpdate="true"
+					closable="true" />
+		</h:form>
+	
+    	<div align="center">
+    	<h4><p:outputLabel value="Visualização do Venda" /></h4>
+        
+        <h:form prependId="false">		
+        <h:inputHidden value="#{vendaMB.venda.codigoVenda}" />	
+  
+            <p:tabView>
+			<p:tab title="Detalhes da Venda">
+			<p:panelGrid columns="4" cellpadding="10">
+			
+			<p:outputLabel value="Data da Venda:" for="dataVenda"/>
+			
+			<p:inputText id="dataVenda" size="40" value="#{vendaMB.venda.dataVenda.time}" readonly="true">
+				<f:convertDateTime pattern="dd/MM/YYYY"/>
+			</p:inputText>
+					  
+           	<p:outputLabel value="Cliente:" for="cliente"/>
+			<p:inputText id="cliente" size="40" value="#{vendaMB.venda.cliente.nome}" readonly="true"/>
+			
+			<p:outputLabel value="Forma de Pagamento: " for="formaPagamento"/>
+			<p:inputText id="formaPagamento" size="40" value="#{vendaMB.venda.formaPagamento}" readonly="true"/>
+			
+			<p:outputLabel value="Total a Cobrar: " for="totalcobrar"/>
+			<p:inputText id="totalcobrar" size="40" value="#{vendaMB.venda.valorTotalCobrar}" readonly="true">
+				<f:convertNumber pattern="R$ #0.00" />
+			</p:inputText>
+		</p:panelGrid>
+		
+		<p:dataTable value="#{vendaMB.venda.itens}" var="item">
+
+						<p:column headerText="Produto">
+							<h:outputText value="#{item.produto.descricao}" />
+						</p:column>
+
+						<p:column headerText="Valor">
+							<h:outputText value="#{item.valorVenda}">
+								<f:convertNumber pattern="R$ #0.00" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Quantidade">
+							<h:outputText value="#{item.quantidade}" />
+						</p:column>
+
+						<p:column headerText="Total">
+							<h:outputText value="#{item.total}">
+								<f:convertNumber pattern="R$ #0.00" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+			</p:tab>
+		</p:tabView>
+		
+		<p:commandButton value="Voltar" action="#{vendaMB.voltar}"/>	
+	
+        </h:form>
+       </div>
+	</ui:define>
+	</ui:composition>	
+</html>
+

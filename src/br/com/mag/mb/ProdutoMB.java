@@ -29,6 +29,7 @@ public class ProdutoMB implements Serializable{
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
 	private Produto produto;
 	private List<Produto> produtos;
+	private List<Produto> produtosAtivos;
 	private Integer categoriaSelecionada;
 	private Integer subCategoriaSelecionada;
 	
@@ -38,6 +39,7 @@ public class ProdutoMB implements Serializable{
 		public ProdutoMB() {
 	        produto = new Produto();
 	        produtos = new ArrayList<Produto>();
+	        produtosAtivos = new ArrayList<Produto>();
 	        
 	    }
 		
@@ -79,7 +81,21 @@ public class ProdutoMB implements Serializable{
 			return produtos;
 		}
 	    
-	    
+	    public List<Produto> getProdutosAtivos() {
+            if (produtosAtivos.isEmpty()) {
+                try {
+                    List<Produto> produtoList = produtoDAO.listarTodos();
+                    for (Produto produto : produtoList) {
+                        if (produto.isAtivo()) {
+                            produtosAtivos.add(produto);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return produtosAtivos;
+        }
 	    
 	    public void enviarSubCat(){
 	    	System.out.println(subCategoriaSelecionada);
@@ -95,12 +111,9 @@ public class ProdutoMB implements Serializable{
 			
 		}
 	    
-	    public List<SubCategoria> getSubCategorias() {
-	    	
-	    
-		//	if (categoriaSelecionada != null) {
-				System.out.println(categoriaSelecionada);
-				if (categoriaSelecionada != null){
+	    public List<SubCategoria> getSubCategorias() {  
+			System.out.println(categoriaSelecionada);
+			if (categoriaSelecionada != null){
 				try {
 					List<SubCategoria> subCategoriaList = produtoDAO.listarSelecionadas(categoriaSelecionada);
 				//	for (SubCategoria subCategoria : subCategoriaList) {
@@ -109,11 +122,8 @@ public class ProdutoMB implements Serializable{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-	//		} else {
-	//			this.subCategorias = subCategoriaMB.getSubCategorias();
-	//		}
-				}
-			
+	
+			}	
 			return subCategorias;
 		}
 	    

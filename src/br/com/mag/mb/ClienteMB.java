@@ -23,13 +23,21 @@ public class ClienteMB implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7247920166232548053L;
-	
+
 	private Cliente cliente = new Cliente();
 	private ClienteDAO clienteDao = new ClienteDAO();
 	private List<Cliente> clientes;
-	
+	private Endereco enderecoSelecionado;
+
+	public Endereco getEnderecoSelecionado() {
+		return enderecoSelecionado;
+	}
+
+	public void setEnderecoSelecionado(Endereco enderecoSelecionado) {
+		this.enderecoSelecionado = enderecoSelecionado;
+	}
+
 	private Endereco endereco = new Endereco();
-	
 
 	public ClienteMB() {
 		clientes = new ArrayList<Cliente>();
@@ -42,7 +50,6 @@ public class ClienteMB implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
 
 	public Endereco getEndereco() {
 		return endereco;
@@ -65,9 +72,9 @@ public class ClienteMB implements Serializable {
 		}
 		return clientes;
 	}
-	
+
 	public void adicionarEndereco() {
-		
+
 		cliente.adicionarEndereco(endereco);
 		endereco = new Endereco();
 	}
@@ -97,7 +104,8 @@ public class ClienteMB implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			}
+		}
+		cliente = null;
 
 		return "/buscaCliente.faces?faces-redirect=true";
 
@@ -108,12 +116,12 @@ public class ClienteMB implements Serializable {
 		cliente = clienteDao.getPrimaryKey(cliente);
 		return "/cadastraCliente.faces";
 	}
-	
-	public String cadastrar(){
+
+	public String cadastrar() {
 
 		return "/cadastraCliente.faces?faces-redirect=true";
 	}
-	
+
 	public String visualizar() throws DAOException {
 
 		cliente = clienteDao.getPrimaryKey(cliente);
@@ -121,35 +129,49 @@ public class ClienteMB implements Serializable {
 		return "/visualizaCliente.faces";
 	}
 
-/*	public String buscar() throws DAOException {
-
-		this.clientes = dao.listar(cliente);
-
-		return "/buscaCliente.xhtml";
-	}*/
+	/*
+	 * public String buscar() throws DAOException {
+	 * 
+	 * this.clientes = dao.listar(cliente);
+	 * 
+	 * return "/buscaCliente.xhtml"; }
+	 */
 
 	// Carregar enumerador
 	public TipoSituacaoCliente[] getTipoSituacoes() {
 		return TipoSituacaoCliente.values();
 	}
-	
+
 	// Carregar enumerador TipoEndereco
 	public TipoEndereco[] getTipoEnderecos() {
 		return TipoEndereco.values();
 	}
-	
+
 	public String excluir() throws DAOException {
-		if (cliente == null) {
-			// enviar mensagem de alerta/erro ("Não é possivel excluir categoria nula!");
-		} else {
-			clienteDao.excluir(cliente);
+		
+		try {
+
+			if (cliente == null) {
+				// enviar mensagem de alerta/erro
+			} else {
+				clienteDao.excluir(cliente);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		return "/buscaCliente.faces?faces-redirect=true";
 
 	}
-	
+
+	public void excluirEndereco() throws DAOException {
+		cliente.getEnderecos().remove(enderecoSelecionado);
+		enderecoSelecionado = null;
+	}
+
 	public String voltar() {
-		
+		cliente = null;
 		return "/buscaCliente.faces";
 	}
 

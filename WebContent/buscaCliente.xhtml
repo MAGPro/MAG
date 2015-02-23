@@ -12,6 +12,7 @@
 		<h:form prependId="false">
 
 			<div align="center">
+			<p:messages id= "messages" showDetail="true"  autoUpdate="true" closable="true"/>
 				<h4>
 					<p:outputLabel value="Lista de Clientes" />
 				</h4>
@@ -23,7 +24,7 @@
 			</div>
 
 			<p:dataTable var="cliente" value="#{clienteMB.clientes}"
-				paginator="true" rows="3" paginatorPosition="bottom"
+				paginator="true" rows="10" paginatorPosition="bottom"
 				widgetVar="clienteT">
 
 				<f:facet name="header">
@@ -58,7 +59,7 @@
 
 				<p:column headerText="Ações" style="text-align: center">
 
-					<p:commandLink action="#{clienteMB.editar}">
+					<p:commandLink action="#{clienteMB.visualizar}">
 						<p:graphicImage url="/resources/img/glyphicons_027_search.png"
 							title="Visualizar" />
 						<f:setPropertyActionListener value="#{cliente}"

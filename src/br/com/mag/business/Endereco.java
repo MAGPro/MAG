@@ -26,7 +26,7 @@ public class Endereco extends AbstractEntity {
 	private String numero;
 	private String complemento;
 	private String bairro;
-	private Integer cep;
+	private String cep;
 	private String cidade;
 	private String estado;
 	
@@ -41,7 +41,7 @@ public class Endereco extends AbstractEntity {
 	}
 
 	public Endereco(String logradouro, String numero, String complemento,
-			String bairro, Integer cep, String cidade, String estado,
+			String bairro, String cep, String cidade, String estado,
 			TipoEndereco tipo,Cliente cliente) {
 		super();
 		this.logradouro = logradouro;
@@ -95,11 +95,11 @@ public class Endereco extends AbstractEntity {
 		this.bairro = bairro;
 	}
 
-	public Integer getCep() {
+	public String getCep() {
 		return cep;
 	}
 
-	public void setCep(Integer cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 

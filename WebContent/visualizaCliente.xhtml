@@ -15,7 +15,7 @@
 				closable="true" />
 			<div align="center">
 				<h4>
-					<p:outputLabel value="Cadastro de Clientes" />
+					<p:outputLabel value="Visualização de Clientes" />
 				</h4>
 			</div>
 
@@ -24,36 +24,38 @@
 					<h:panelGrid columns="6" cellpadding="10">
 						<p:outputLabel for="nome" value="Nome" />
 						<p:inputText id="nome" value="#{clienteMB.cliente.nome}"
-							required="true" />
+							readonly="true" />
 						<p:outputLabel for="cpf" value="CPF" />
 						<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
-							mask="999.999.999-99" required="true" />
+							mask="999.999.999-99" readonly="true" />
 						<p:outputLabel for="rg" value="RG" />
-						<p:inputText id="rg" value="#{clienteMB.cliente.rg}" />
+						<p:inputText id="rg" value="#{clienteMB.cliente.rg}"
+							readonly="true" />
 
 						<p:outputLabel for="dataNascimento" value="Data Nascimento" />
 						<p:calendar id="dataNascimento" pattern="dd/MM/yyyy" mask="true"
-							value="#{clienteMB.cliente.dataNascimento.time}" required="true" />
+							value="#{clienteMB.cliente.dataNascimento.time}" readonly="true" disabled="true"  />
 
 						<p:outputLabel for="telResidencial" value="Tel. Residencial" />
-						<p:inputMask id="telResidencial"
+						<p:inputMask id="telResidencial" readonly="true"
 							value="#{clienteMB.cliente.telResidencial}" mask="(99) 9999-9999" />
 						<p:outputLabel for="telComercial" value="Tel. Comercial" />
-						<p:inputMask id="telComercial"
+						<p:inputMask id="telComercial" readonly="true"
 							value="#{clienteMB.cliente.telComercial}"
 							mask="(99) 9999-9999? x99999" />
 						<p:outputLabel for="telMovel" value="Tel. Celular" />
 						<p:inputMask id="telMovel" value="#{clienteMB.cliente.telMovel}"
-							mask="(99) 99999-9999" required="true" />
+							mask="(99) 99999-9999" readonly="true" />
 						<p:outputLabel for="email" value="Email" />
-						<p:inputText id="email" value="#{clienteMB.cliente.email}" />
+						<p:inputText id="email" value="#{clienteMB.cliente.email}"
+							readonly="true" />
 
 						<p:outputLabel value="Situação Cliente" />
 						<h:panelGroup>
 							<p:selectOneMenu id="situacaoCliente"
 								value="#{clienteMB.cliente.situacaoCliente}">
 								<f:selectItems var="s" value="#{clienteMB.tipoSituacoes}"
-									itemValue="#{s}" itemLabel="#{s.label}" />
+									itemValue="#{s}" itemLabel="#{s.label}" itemDisabled="true"/>
 							</p:selectOneMenu>
 						</h:panelGroup>
 
@@ -62,51 +64,9 @@
 
 				<p:tab title="Endereço" id="tabEndereco">
 
-					<h:panelGrid columns="6" cellpadding="10" var="">
 
-						<p:outputLabel value="Tipo Endereço" />
-						<h:panelGroup>
-							<p:selectOneMenu id="tipoEndereco"
-								value="#{clienteMB.endereco.tipo}">
-								<f:selectItems var="s" value="#{clienteMB.tipoEnderecos}"
-									itemValue="#{s}" itemLabel="#{s.label}" />
-							</p:selectOneMenu>
-						</h:panelGroup>
-
-						<p:outputLabel for="logradouro" value="Logradouro" />
-						<p:inputText id="logradouro" name="lgradouro"
-							value="#{clienteMB.endereco.logradouro}" />
-						<p:outputLabel for="numero" value="Número" />
-						<p:inputText id="numero" value="#{clienteMB.endereco.numero}" />
-						<p:outputLabel for="complemento" value="Complemento" />
-						<p:inputText id="complemento"
-							value="#{clienteMB.endereco.complemento}" />
-						<p:outputLabel for="bairro" value="Bairro" />
-						<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}" />
-						<p:outputLabel for="cep" value="Cep" />
-						<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" mask="99999-999"/>
-						<p:outputLabel for="cidade" value="Cidade" />
-						<p:inputText id="cidade" value="#{clienteMB.endereco.cidade}" />
-						<p:outputLabel for="estado" value="Estado" />
-						<p:inputText id="estado" size="2"
-							value="#{clienteMB.endereco.estado}" />
-						<p:outputLabel value="" />
-
-						<p:commandButton actionListener="#{clienteMB.adicionarEndereco}"
-							id="button" value="Adicionar endereço" update="tabelaEndereco" />
-					</h:panelGrid>
-
-					<p:contextMenu for="tabelaEndereco">
-						<p:menuitem value="Excluir" update="tabelaEndereco"
-							icon="ui-icon-close" ajax="false"
-							actionListener="#{clienteMB.excluirEndereco}" />
-					</p:contextMenu>
-					
 					<p:dataTable value="#{clienteMB.cliente.enderecos}" var="endereco"
-						id="tabelaEndereco" editable="true"
-						rowKey="#{endereco.logradouro}"
-						selection="#{clienteMB.enderecoSelecionado}"
-						selectionMode="single">
+						id="tabelaEndereco" editable="true">
 
 						<p:column headerText="Tipo Endereço">
 							<p:cellEditor>
@@ -196,20 +156,13 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column style="width:32px">
-							<p:rowEditor />
-						</p:column>
-						
 					</p:dataTable>
 				</p:tab>
 
 			</p:tabView>
-
-			<p:outputLabel value="* campos obrigatórios" />
 			<center>
-				<p:commandButton id="salvar" value="Salvar" ajax="false"
-					actionListener="#{messagesViewMB.info}" action="#{clienteMB.salvar}">
-				</p:commandButton>
+				<p:commandButton value="Voltar"
+					action="#{clienteMB.voltar}" />
 			</center>
 
 		</h:form>

@@ -1,6 +1,4 @@
 package br.com.mag.business;
-
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -22,13 +20,16 @@ public class ContasReceber {
 	@Enumerated(EnumType.STRING)
 	private TipoSituacaoContasReceber situacaoContasReceber;
 	private Calendar dataPagamento;
-	private BigDecimal valorPago;
+	private Calendar dataPrevista;
+	private double valorPago;
+	private double valorParcela;
+	
 	
 	@ManyToOne
 	private Venda venda;
 	
 	public ContasReceber(TipoSituacaoContasReceber situacaoContasReceber,
-			Calendar dataPagamento, BigDecimal valorPago, Venda venda) {
+			Calendar dataPagamento, double valorPago, Venda venda) {
 		super();
 		this.situacaoContasReceber = situacaoContasReceber;
 		this.dataPagamento = dataPagamento;
@@ -64,11 +65,11 @@ public class ContasReceber {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public BigDecimal getValorPago() {
+	public double getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(BigDecimal valorPago) {
+	public void setValorPago(double valorPago) {
 		this.valorPago = valorPago;
 	}
 
@@ -79,9 +80,21 @@ public class ContasReceber {
 	public void setVenda(Venda venda) {
 		this.venda = venda;
 	}
-	
 
-	
-	
-	
+	public Calendar getDataPrevista() {
+		return dataPrevista;
+	}
+
+	public void setDataPrevista(Calendar dataPrevista) {
+		this.dataPrevista = dataPrevista;
+	}
+
+	public double getValorParcela() {
+		return valorParcela;
+	}
+
+	public void setValorParcela(double valorParcela) {
+		this.valorParcela = valorParcela;
+	}
+
 }

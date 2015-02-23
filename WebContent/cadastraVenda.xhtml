@@ -11,70 +11,46 @@
 		<h:form>
 			<p:messages id="messages" autoUpdate="true" closable="true" />
 		</h:form>
-		<center><H3>Cadastrar Venda</H3></center>
-		<h:form>
-			<p:tabView>
+		<h:form prependId="false" id="formv">
+
+			<h:panelGrid></h:panelGrid>
+			<h:panelGrid></h:panelGrid>
+
+			<p:tabView >
 				<p:tab title="Fazer Venda - Passo 1/3">
-					<p:panelGrid columns="6" cellpadding="2">
-						<p:outputLabel value="Data:" for="dataVenda" />
-						<p:calendar pattern="dd/MM/yyyy" id="dataVenda"
-							value="#{vendaMB.venda.dataVenda.time}" />
 
-						<p:outputLabel value="Quantidade" />
-						<p:inputText value="#{vendaMB.item.quantidade}" size="4" />
+					<center>
+						<p:panelGrid columns="7" cellpadding="2">
 
-						<p:outputLabel value="Selecione o produto" />
-						<h:panelGroup>
-							<p:selectOneMenu value="#{vendaMB.idProduto}">
-								<f:selectItems value="#{produtoMB.produtos}" var="p"
-									itemValue="#{p.id}" itemLabel="#{p.descricao}" />
-							</p:selectOneMenu>
-						</h:panelGroup>
+							<p:outputLabel value="Data" for="dataVenda" />
+							<p:calendar pattern="dd/MM/yyyy" id="dataVenda"
+								value="#{vendaMB.venda.dataVenda.time}" />
 
-						<h:commandButton action="#{vendaMB.adicionarItem}"
-							value="Adicionar Item" update="tabelaItens">
-						</h:commandButton>
+							<p:outputLabel value="Produto" />
 
-						<h:panelGroup>
-							<p:outputLabel value="Sub Total" />
-							<h:outputText id="tvenda" value="#{vendaMB.venda.valorTotal}" />
-						</h:panelGroup>
+							<h:panelGroup>
+								<p:selectOneMenu value="#{vendaMB.idProduto}">
+									<f:selectItems value="#{ProdutoMB.produtosAtivos}" var="p"
+										itemValue="#{p.id}" itemLabel="#{p.descricao}" update="tvenda"
+										itemLabelEscaped="true" />
+								</p:selectOneMenu>
+							</h:panelGroup>
 
-						<p:outputLabel value="Desconto R$(-)" />
-						<p:inputText value="#{vendaMB.venda.desconto}" size="4"/>
+							<p:outputLabel value="Quantidade" />
+							<p:inputText value="#{vendaMB.item.quantidade}" size="4"/>
 
-						<!--  <h:commandButton action=""
-							value="Total">
-						</h:commandButton>-->
-					</p:panelGrid>
-					
-					<p:dataTable value="#{vendaMB.venda.itens}" var="item" id="tabelaItens">
+							<h:commandButton value="Adicionar" update="tvenda"
+								action="#{vendaMB.adicionarItem}">
+							</h:commandButton>
 
-						<p:column headerText="Produto">
-							<h:outputText value="#{item.produto.descricao}" />
-						</p:column>
-
-						<p:column headerText="Valor">
-							<h:outputText value="#{item.valorVenda}">
-								<f:convertNumber pattern="R$ #0.00" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="Quantidade">
-							<h:outputText value="#{item.quantidade}" />
-						</p:column>
-						<p:column headerText="Total">
-							<h:outputText value="#{item.total}">
-								<f:convertNumber pattern="R$ #0.00" />
-							</h:outputText>
-						</p:column>
-					</p:dataTable>
+						</p:panelGrid>
+					</center>
+	<br/><br/><br/>
 				</p:tab>
-
 				<p:tab title="Forma de Pagamento - Passo 2/3">
-					<!--  --><h:form id="pagamento">
-						<h:panelGrid columns="2" cellpadding="10">
 
+					<center>
+						<p:panelGrid columns="4" cellpadding="10">
 							<p:outputLabel value="Selecione a Forma de Pagamento" />
 							<h:panelGroup>
 								<p:selectOneMenu value="#{vendaMB.venda.formaPagamento}">
@@ -83,54 +59,149 @@
 								</p:selectOneMenu>
 							</h:panelGroup>
 
-							<p:outputLabel value="Selecione o Cliente" />
+							<p:outputLabel value="Cliente" />
 							<h:panelGroup>
 								<p:selectOneMenu value="#{vendaMB.idCliente}">
 									<f:selectItems value="#{clienteMB.clientes}" var="c"
 										itemValue="#{c.id}" itemLabel="#{c.nome}" />
 								</p:selectOneMenu>
 							</h:panelGroup>
-						</h:panelGrid>
-					</h:form>
+
+							<p:outputLabel value="Subtotal" />
+							<h:outputText id="tvenda" value="#{vendaMB.venda.valorTotal}">
+								<f:convertNumber pattern="R$ #0.00" />
+							</h:outputText>
+
+							<p:outputLabel value="Desconto R$(-)" />
+							<p:inputText value="#{vendaMB.venda.desconto}" size="6"
+								placeholder="0.00" />
+
+							<p:outputLabel value="Total" />
+							<h:outputText id="tcobrar"
+								value="#{vendaMB.venda.valorTotalCobrar}">
+								<f:convertNumber pattern="R$ #0.00" />
+							</h:outputText>
+
+							<h:commandButton value="Calcular"
+								action="#{vendaMB.getTotalCobrar}" update="tcobrar" />
+						</p:panelGrid>
+					</center>
+		
 				</p:tab>
 
 				<p:tab title="Resumo Final - Passo 3/3">
 
-					<p:panelGrid columns="2">
+					<center><p:panelGrid columns="2" cellpadding="10" align="center" >
+
 						<h:outputText value="Cliente" />
 						<h:outputText value="#{vendaMB.venda.cliente.nome}" />
+
 						<h:outputText value="Forma de Pagamento" />
-						<h:outputText value="#{vendaMB.venda.formaPagamento}" />
+						<h:outputText value="#{vendaMB.venda.formaPagamento.label}" />
+
 						<h:outputText value="Valor Total" />
 						<h:outputText value="#{vendaMB.venda.valorTotal}" />
+
+						<h:outputText value="Valor Total Cobrar" />
+						<h:outputText value="#{vendaMB.venda.valorTotalCobrar}" />
 					</p:panelGrid>
-					<p:dataTable value="#{vendaMB.venda.itens}" var="item">
+					</center>
+					
+				</p:tab>
+			</p:tabView>
+			<p:dataTable value="#{vendaMB.venda.itens}" var="item"
+						id="tabelaItens" rowKey="#{item.produto.descricao}"
+						
+						editable="true">
+						<p:ajax event="rowEdit" listener="#{vendaMB.onRowEdit}" update="tabelaItens" />
+      					 <p:ajax event="rowEditCancel" listener="#{vendaMB.onRowCancel}" />
 
 						<p:column headerText="Produto">
-							<h:outputText value="#{item.produto.descricao}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{item.produto.descricao}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<h:panelGroup>
+										<h:selectOneMenu value="#{vendaMB.idProduto}">
+											<f:selectItems value="#{produtoMB.produtosAtivos}" var="p"
+												itemValue="#{p.id}" itemLabel="#{p.descricao}"
+												update="tvenda" itemLabelEscaped="true" />
+										</h:selectOneMenu>
+									</h:panelGroup>
+								</f:facet>
+
+							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Valor">
-							<h:outputText value="#{item.valorVenda}">
-								<f:convertNumber pattern="R$ #0.00" />
-							</h:outputText>
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{item.valorVenda}">
+										<f:convertNumber pattern="R$ #0.00" />
+									</h:outputText>
+								</f:facet>
+
+								<f:facet name="input">
+									<h:outputText value="#{item.valorVenda}">
+										<f:convertNumber pattern="R$ #0.00" />
+									</h:outputText>
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 
 						<p:column headerText="Quantidade">
-							<h:outputText value="#{item.quantidade}" />
-						</p:column>
-						<p:column headerText="Total" colspan="2">
-							<h:outputText value="#{item.total}">
-								<f:convertNumber pattern="R$ #0.00" />
-							</h:outputText>
-						</p:column>
-					</p:dataTable>
-					<center>
-						<p:commandButton value="Finalizar" action="#{vendaMB.adicionar}" />
-					</center>
-				</p:tab>
+							<p:cellEditor>
 
-			</p:tabView>
+								<f:facet name="output">
+									<h:outputText value="#{item.quantidade}" />
+								</f:facet>
+
+								<f:facet name="input">
+									<p:inputText value="#{vendaMB.item.quantidade}" size="4" />
+								</f:facet>
+
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Total">
+							<p:cellEditor>
+
+								<f:facet name="output">
+									<h:outputText value="#{item.total}">
+										<f:convertNumber pattern="R$ #0.00" />
+									</h:outputText>
+								</f:facet>
+
+								<f:facet name="input">
+									<h:outputText value="#{item.total}">
+										<f:convertNumber pattern="R$ #0.00" />
+									</h:outputText>
+								</f:facet>
+
+							</p:cellEditor>
+						</p:column>
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
+				
+
+					<p:contextMenu for="tabelaItens" widgetVar="cMenu">
+						<p:menuitem value="Edit Cell" icon="ui-icon-search"
+							onclick="PF('cellCars').showCellEditor();return false;" />
+						<p:menuitem value="Hide Menu" icon="ui-icon-close"
+							onclick="PF('cMenu').hide()" />
+					</p:contextMenu>
+					
+					<f:facet name="footer">SubTotal:  #{vendaMB.venda.valorTotal}</f:facet>
+					</p:dataTable>
+					<br/>
+					<center>
+						<p:commandButton value="Finalizar" action="#{vendaMB.salvar}"
+							actionListener="#{messagesViewMB.info}" />
+					</center>
 		</h:form>
 	</ui:define>
 </ui:composition>

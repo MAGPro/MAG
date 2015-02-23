@@ -132,4 +132,13 @@ public class Venda extends AbstractEntity{
 	public Integer getId() {
 		return codigoVenda;
 	}
+
+	public boolean equals(Object obj) {
+		return cliente.equals(obj);
+	}
+
+	public int hashCode() {
+		return cliente.hashCode();
+	}
+	
 }

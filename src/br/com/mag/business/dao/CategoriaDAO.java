@@ -26,6 +26,19 @@ public class CategoriaDAO extends GenericDAO <Categoria> {
 		return categorias;
 	} 
 	
+	public List<Categoria> listarAtivas(){
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		StringBuffer sql = new StringBuffer("Select c from Categoria c ");
+		
+		sql.append(" WHERE c.ativo = TRUE");
+		
+		Query query = getEntityManager().createQuery(sql.toString());
+		
+		categorias = query.getResultList();
+		
+		return categorias;
+	} 
+	
 	public void buscarCategoria(Integer id){
 		getPrimaryKey(id);
 		

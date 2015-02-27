@@ -7,6 +7,7 @@ public class Filtro implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String descricao;
+	private String nome;
 	
 	private int primeiroRegistro;
 	private int quantidadeRegistros;
@@ -19,6 +20,14 @@ public class Filtro implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public int getPrimeiroRegistro() {

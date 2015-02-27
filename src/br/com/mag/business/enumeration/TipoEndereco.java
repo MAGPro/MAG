@@ -2,9 +2,7 @@ package br.com.mag.business.enumeration;
 
 public enum TipoEndereco {
 	RESIDENCIAL("Residencial"),
-	COMERCIAL("Comercial"),
-	ENTREGAMERCADORIA("Entrega de Produtos"),
-	PAGAMENTO("Pagamento");
+	COMERCIAL("Comercial");
 	
 	private String label;
 	

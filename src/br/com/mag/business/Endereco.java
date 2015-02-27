@@ -33,7 +33,7 @@ public class Endereco extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipo;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne//(cascade = CascadeType.ALL)
 	private Cliente cliente;
 		
 	public Endereco() {

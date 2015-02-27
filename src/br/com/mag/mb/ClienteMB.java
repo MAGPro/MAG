@@ -3,11 +3,15 @@ package br.com.mag.mb;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SelectableDataModel;
+import org.primefaces.model.SortOrder;
 
 import br.com.mag.business.Cliente;
 import br.com.mag.business.Endereco;
@@ -15,19 +19,79 @@ import br.com.mag.business.dao.ClienteDAO;
 import br.com.mag.business.dao.DAOException;
 import br.com.mag.business.enumeration.TipoEndereco;
 import br.com.mag.business.enumeration.TipoSituacaoCliente;
+import br.com.mag.business.repository.Filtro;
+import br.com.mag.business.repository.FiltroCliente;
 
 @ManagedBean
 @SessionScoped
 public class ClienteMB implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 7247920166232548053L;
 
-	private Cliente cliente = new Cliente();
-	private ClienteDAO clienteDao = new ClienteDAO();
-	private List<Cliente> clientes;
+	private Cliente cliente;
+	private ClienteDAO clienteDao;
+	// private List<Cliente> clientes;
 	private Endereco enderecoSelecionado;
+	private Endereco endereco = new Endereco();
+
+	private FiltroCliente clientesF = new FiltroCliente();
+
+	private Filtro filtro = new Filtro();
+	private LazyDataModel<Cliente> model;
+	private SelectableDataModel<Cliente> select;
+
+	public ClienteMB() {
+		model = new LazyDataModel<Cliente>() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public List<Cliente> load(int first, int pageSize,
+					String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+
+				filtro.setPrimeiroRegistro(first);
+				filtro.setQuantidadeRegistros(pageSize);
+				filtro.setAscendente(SortOrder.ASCENDING.equals(sortOrder));
+				filtro.setPropriedadeOrdenacao(sortField);
+
+				setRowCount(clientesF.quantidadeFiltrados(filtro));
+
+				return clientesF.filtrados(filtro);
+			}
+		};
+		cliente = new Cliente();
+		clienteDao = new ClienteDAO();
+		
+/*		select = new SelectableDataModel<Cliente>() {
+						
+			@Override
+			public Object getRowKey(Cliente cliente) {
+				return cliente.getEnderecos();
+			}
+			
+			@Override
+			public Cliente getRowData(String rowKey) {
+		        List<Cliente> cli = (List<Cliente>) getWrappedData();
+
+		        for(Cliente c : cli) {
+		            if(c.getCodigoCliente().equals(rowKey))
+		                return c;
+		        }
+
+		        return null;
+			}
+		};*/
+
+	}
+
+	public Filtro getFiltro() {
+		return filtro;
+	}
+
+	public LazyDataModel<Cliente> getModel() {
+		return model;
+	}
 
 	public Endereco getEnderecoSelecionado() {
 		return enderecoSelecionado;
@@ -35,12 +99,6 @@ public class ClienteMB implements Serializable {
 
 	public void setEnderecoSelecionado(Endereco enderecoSelecionado) {
 		this.enderecoSelecionado = enderecoSelecionado;
-	}
-
-	private Endereco endereco = new Endereco();
-
-	public ClienteMB() {
-		clientes = new ArrayList<Cliente>();
 	}
 
 	public Cliente getCliente() {
@@ -57,20 +115,6 @@ public class ClienteMB implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public List<Cliente> getClientes() {
-		if (clientes.isEmpty()) {
-			try {
-				List<Cliente> clienteList = clienteDao.listarTodos();
-				for (Cliente cliente : clienteList) {
-					clientes.add(cliente);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return clientes;
 	}
 
 	public void adicionarEndereco() {
@@ -118,7 +162,7 @@ public class ClienteMB implements Serializable {
 	}
 
 	public String cadastrar() {
-
+		cliente = new Cliente();
 		return "/cadastraCliente.faces?faces-redirect=true";
 	}
 
@@ -128,14 +172,6 @@ public class ClienteMB implements Serializable {
 
 		return "/visualizaCliente.faces";
 	}
-
-	/*
-	 * public String buscar() throws DAOException {
-	 * 
-	 * this.clientes = dao.listar(cliente);
-	 * 
-	 * return "/buscaCliente.xhtml"; }
-	 */
 
 	// Carregar enumerador
 	public TipoSituacaoCliente[] getTipoSituacoes() {
@@ -148,7 +184,7 @@ public class ClienteMB implements Serializable {
 	}
 
 	public String excluir() throws DAOException {
-		
+
 		try {
 
 			if (cliente == null) {
@@ -156,7 +192,7 @@ public class ClienteMB implements Serializable {
 			} else {
 				clienteDao.excluir(cliente);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,12 +202,14 @@ public class ClienteMB implements Serializable {
 	}
 
 	public void excluirEndereco() throws DAOException {
-		cliente.getEnderecos().remove(enderecoSelecionado);
-		enderecoSelecionado = null;
+		if (this.enderecoSelecionado != null) {
+			this.cliente.getEnderecos().remove(this.enderecoSelecionado);
+			// enderecoSelecionado = null;
+		}
 	}
 
 	public String voltar() {
-		cliente = null;
+
 		return "/buscaCliente.faces";
 	}
 

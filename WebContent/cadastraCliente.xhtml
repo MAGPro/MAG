@@ -52,6 +52,7 @@
 						<h:panelGroup>
 							<p:selectOneMenu id="situacaoCliente"
 								value="#{clienteMB.cliente.situacaoCliente}">
+								<f:selectItem itemLabel="Selecione uma situação"/>
 								<f:selectItems var="s" value="#{clienteMB.tipoSituacoes}"
 									itemValue="#{s}" itemLabel="#{s.label}" />
 							</p:selectOneMenu>
@@ -97,7 +98,7 @@
 					</h:panelGrid>
 
 					<p:contextMenu for="tabelaEndereco">
-						<p:menuitem value="Excluir" update="tabelaEndereco"
+						<p:menuitem value="Excluir"
 							icon="ui-icon-close" ajax="false"
 							actionListener="#{clienteMB.excluirEndereco}" />
 					</p:contextMenu>

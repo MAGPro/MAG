@@ -1,4 +1,5 @@
 package br.com.mag.business;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,7 +37,7 @@ public class Venda extends AbstractEntity{
 	@ManyToOne
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy="venda", fetch= FetchType.LAZY)
+	@OneToMany(mappedBy="venda", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ContasReceber> contasReceber;
 	
 	@OneToMany(mappedBy="venda",targetEntity = ItemVenda.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -67,6 +68,11 @@ public class Venda extends AbstractEntity{
 	public void adicionarItem(ItemVenda item) {
 		this.itens.add(item);
 	}
+	
+	public void adicionarContaReceber(ContasReceber contaReceber) {
+		this.contasReceber.add(contaReceber);
+	}
+	
 	public Integer getCodigoVenda() {
 		return codigoVenda;
 	}
@@ -132,11 +138,9 @@ public class Venda extends AbstractEntity{
 	public Integer getId() {
 		return codigoVenda;
 	}
-
 	public boolean equals(Object obj) {
 		return cliente.equals(obj);
 	}
-
 	public int hashCode() {
 		return cliente.hashCode();
 	}

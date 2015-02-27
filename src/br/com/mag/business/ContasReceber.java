@@ -13,8 +13,12 @@ import javax.persistence.ManyToOne;
 import br.com.mag.business.enumeration.TipoSituacaoContasReceber;
 
 @Entity
-public class ContasReceber {
+public class ContasReceber extends AbstractEntity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7798822491274378375L;
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer codigoContasReceber;
 	@Enumerated(EnumType.STRING)
@@ -95,6 +99,12 @@ public class ContasReceber {
 
 	public void setValorParcela(double valorParcela) {
 		this.valorParcela = valorParcela;
+	}
+
+	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return codigoContasReceber;
 	}
 
 }

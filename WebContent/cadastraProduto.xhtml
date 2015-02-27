@@ -30,7 +30,7 @@
 			<h:panelGroup>
 				<p:selectOneMenu id="categoria" value="#{produtoMB.categoriaSelecionada}" required="true">
 					<f:selectItem itemLabel="Selecione uma categoria"/>
-					<f:selectItems value="#{categoriaMB.categorias}" var="categoria" 
+					<f:selectItems value="#{categoriaMB.categoriasAtivas}" var="categoria" 
 					itemLabel="#{categoria.descricao}" itemValue="#{categoria.codigoCategoria}" />													
 					<p:ajax listener="#{produtoMB.enviarCat}" update="subCategoria"/>							
 				

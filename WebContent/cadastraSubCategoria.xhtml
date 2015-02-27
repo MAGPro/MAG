@@ -33,7 +33,7 @@
 			
 				<p:selectOneMenu id="categoria" value="#{subCategoriaMB.categoriaSelecionada}" required="true" filter="#{categoria.descricao}">
 					<f:selectItem itemLabel="Selecione uma categoria"/>
-					<f:selectItems value="#{categoriaMB.categorias}" var="categoria" 
+					<f:selectItems value="#{categoriaMB.categoriasAtivas}" var="categoria" 
 					itemLabel="#{categoria.descricao}" itemValue="#{categoria.codigoCategoria}" />	
 					<p:ajax listener="#{subCategoriaMB.enviarCat}"/>							
 				</p:selectOneMenu>

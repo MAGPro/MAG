@@ -42,21 +42,21 @@
 	
 			<p:column headerText="Ações" style="text-align: center">
 			
-				<p:commandLink action="#{categoria.visualizar}" >
+				<p:commandLink action="#{categoriaMB.visualizar}" >
 					<p:graphicImage url="/resources/img/glyphicons_027_search.png" title="Visualizar" />				
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaMB.categoria}" />
 				</p:commandLink>
 				
 				<h:outputText value="   " />
 			
-				<p:commandLink action="#{categoria.editar}" >
+				<p:commandLink action="#{categoriaMB.editar}" >
 					<p:graphicImage url="/resources/img/glyphicons_030_pencil.png" title="Editar" />				
 					<f:setPropertyActionListener value="#{categoria}" target="#{categoriaMB.categoria}" />
 				</p:commandLink>
 				
 				<h:outputText value="   " />
 				
-				<p:commandLink action="#{categoria.desativar}" >
+				<p:commandLink action="#{categoriaMB.desativar}" >
 					<p:graphicImage url="#{categoria.ativo == 'TRUE' ? '/resources/img/glyphicons_152_check.png' : '/resources/img/glyphicons_153_unchecked.png'}" title="#{categoria.ativo == 'TRUE' ? 'Desativar' : 'Ativar'}" />					
 					<f:setPropertyActionListener value="#{categoria}"
 							target="#{categoriaMB.categoria}" />

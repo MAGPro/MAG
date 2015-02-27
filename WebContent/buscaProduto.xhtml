@@ -14,36 +14,33 @@
 		<p:messages id= "messages" showDetail="true"  autoUpdate="true" closable="true"/>
 		
 		<h4><p:outputLabel value="Lista de Produtos" /></h4>
-
+		<div align="right">
 		<p:commandLink action="#{produtoMB.cadastrar}" >
-			<p:graphicImage url="/resources/img/glyphicons_190_circle_plus.png" title="Cadastrar" />			
+			<p:graphicImage url="/resources/img/cadastrar.png" title="Cadastrar"/>			
 		</p:commandLink>
+		</div>
 
 	</div>
 	
 		<h:panelGrid></h:panelGrid>
 			
 		<p:dataTable var="produto" value="#{produtoMB.produtos}" paginator="true" rowsPerPageTemplate="5,10,15" rows="10" paginatorPosition="bottom" >
-			<p:column headerText="Id">
-				<h:outputText value="#{produto.codigoProduto}" />
+			<p:column sortBy="#{produto.descricao}" headerText="Descrição">
+				<center><h:outputText value="#{produto.descricao}" /></center>
 			</p:column>
-	
-			<p:column filterBy="#{produto.descricao}" headerText="Descrição" filterMatchMode="contains">
-				<h:outputText value="#{produto.descricao}" />
-			</p:column>
-			<p:column headerText="Categoria">
-				<h:outputText
-					value="#{produto.subCategoria.categoria.descricao}" />
+			<p:column sortBy="#{produto.subCategoria.categoria.descricao}" headerText="Categoria">
+				<center><h:outputText
+					value="#{produto.subCategoria.categoria.descricao}" /></center>
 			</p:column>
 			
-			<p:column headerText="Subcategoria">
-				<h:outputText
-					value="#{produto.subCategoria.descricao}" />
+			<p:column sortBy="#{produto.subCategoria.descricao}" headerText="Subcategoria">
+				<center><h:outputText
+					value="#{produto.subCategoria.descricao}" /></center>
 			</p:column>'
 		
 			<p:column headerText="Situação">
-				<h:outputText
-					value="#{produto.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" />
+				<center><h:outputText
+					value="#{produto.ativo == 'TRUE' ? 'Ativo' : 'Inativo'}" /></center>
 			</p:column>
 	
 			<p:column headerText="Ações" style="text-align: center">
@@ -61,8 +58,8 @@
 				</p:commandLink>
 				
 				<h:outputText value="   " />
-				<p:commandLink action="#{produtoMB.excluir}" >
-					<p:graphicImage url="/resources/img/glyphicons_016_bin.png" title="Excluir" />					
+				<p:commandLink action="#{produtoMB.desativar}" >
+					<p:graphicImage url="#{produto.ativo == 'TRUE' ? '/resources/img/glyphicons_152_check.png' : '/resources/img/glyphicons_153_unchecked.png'}" title="#{produto.ativo == 'TRUE' ? 'Desativar' : 'Ativar'}" />					
 					<f:setPropertyActionListener value="#{produto}"
 							target="#{produtoMB.produto}" />
 				</p:commandLink>

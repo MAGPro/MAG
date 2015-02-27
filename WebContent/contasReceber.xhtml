@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/pages/_template.xhtml">
+	<ui:define name="conteudo">
+	<h:form prependId="false">
+	
+	<div align="center">
+		<p:messages id= "messages" showDetail="true"  autoUpdate="true" closable="true"/>
+		
+		<h4><p:outputLabel value="Contas a Receber" /></h4>
+
+	</div>
+	
+		<h:panelGrid></h:panelGrid>
+		
+	   <p:dataTable id="contas1" var="contas" value="#{contasReceberMB.listContasReceber}" editable="true" style="margin-bottom:20px">
+       <p:ajax event="cellEdit"  listener="#{contasReceberMB.salvar}" update="@this"/>
+       <p:ajax event="rowEditCancel" listener="#{contasReceberMB.salvar}" update="@this"/>
+       
+       
+      <p:column headerText="Cliente">
+           <p:cellEditor>
+               <f:facet name="output"><center><h:outputText value="#{contas.venda.cliente.nome}" /></center></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu id="cliente" value="#{contas.venda.cliente.codigoCliente}" style="width:100%" disabled="true">
+                   	<f:selectItems value="#{clienteMB.clientes}"  var="cliente" itemLabel="#{cliente.nome}" itemValue="cliente.CodigoCliente"/>
+                   </h:selectOneMenu>
+               </f:facet>
+           </p:cellEditor>
+       </p:column> 
+    
+       <p:column headerText="Situação">
+       	   <center>
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{contas.situacaoContasReceber}" /></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu id="situacaoContasReceber" value="#{contas.situacaoContasReceber}" style="width:100%" disabled="true">
+                       <f:selectItems var="s" value="#{contasReceberMB.tipoSituacaoContasReceber}" itemLabel="#{g.label}" itemValue="#{g}" />
+                   </h:selectOneMenu>
+               </f:facet>
+           </p:cellEditor>
+           </center>
+       </p:column>
+  
+ 	 <p:column headerText="Valor da Parcela">
+ 	 	   <center>
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{contas.valorParcela}">
+               <f:convertNumber locale="pt_BR" type="currency"/> </h:outputText></f:facet>
+               <f:facet name="input"><p:inputText value="#{contas.valorParcela}"  style="width:100%" readonly="true"/></f:facet>
+           </p:cellEditor>
+           </center>
+       </p:column>
+  
+       <p:column headerText="Valor Pago">
+       	   <center>
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{contas.valorPago}">
+               <f:convertNumber locale="pt_BR" type="currency"/> </h:outputText></f:facet>
+               <f:facet name="input"><p:inputText value="#{contas.valorPago}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+           </center>
+       </p:column>
+ 	
+ 		<p:column headerText="Data de pagamento">
+ 		   <center>
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{contas.dataPagamento.time}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+               <f:facet name="input"><p:calendar value="#{contas.dataPagamento.time}" pattern="dd/MM/yyyy" mask="true" style="width:100%" /></f:facet>
+           </p:cellEditor>
+           </center>
+       </p:column>
+       
+       <p:column headerText="Venda">
+      	 <center><p:commandLink action="#{vendaMB.visualizar}" >
+			<p:graphicImage url="/resources/img/glyphicons_027_search.png" title="Visualizar" />				
+				<f:setPropertyActionListener value="#{categoria}" target="#{categoriaMB.categoria}" />
+		</p:commandLink></center> 
+ 	  </p:column>
+ 	 
+       
+       <p:column headerText="Registrar" style="width:80px">
+       	
+           <p:rowEditor  />
+           
+       </p:column>
+   </p:dataTable>
+ 
+
+	 </h:form>
+	</ui:define>
+	</ui:composition>	
+</html>

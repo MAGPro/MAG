@@ -6,12 +6,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
-import br.com.mag.business.Categoria;
 import br.com.mag.business.Produto;
 import br.com.mag.business.SubCategoria;
-import br.com.mag.business.dao.CategoriaDAO;
 import br.com.mag.business.dao.DAOException;
 import br.com.mag.business.dao.ProdutoDAO;
 import br.com.mag.business.dao.SubCategoriaDAO;
@@ -98,21 +95,15 @@ public class ProdutoMB implements Serializable{
         }
 	    
 	    public void enviarSubCat(){
-	    	System.out.println(subCategoriaSelecionada);
-			produto.setSubCategoria(new SubCategoriaDAO().getPrimaryKey(subCategoriaSelecionada));	
-			System.out.println(produto.getSubCategoria().getDescricao());
+	    	produto.setSubCategoria(new SubCategoriaDAO().getPrimaryKey(subCategoriaSelecionada));	
 		}
 	    
 	    public void enviarCat(){
-			
-	    	System.out.println(categoriaSelecionada);
-	    	subCategorias = null;
+			subCategorias = null;
 			getSubCategorias();
-			
 		}
 	    
 	    public List<SubCategoria> getSubCategorias() {  
-			System.out.println(categoriaSelecionada);
 			if (categoriaSelecionada != null){
 				try {
 					List<SubCategoria> subCategoriaList = produtoDAO.listarSelecionadas(categoriaSelecionada);
@@ -122,7 +113,6 @@ public class ProdutoMB implements Serializable{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-	
 			}	
 			return subCategorias;
 		}
@@ -134,10 +124,7 @@ public class ProdutoMB implements Serializable{
 		}
 		
 	    public String salvar() throws DAOException {
-			
-	    	System.out.println(subCategoriaSelecionada);
-	    	System.out.println(produto.getSubCategoria());
-			if (produto == null) {
+	    	if (produto == null) {
 				//enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
 			} else if (produto.getCodigoProduto() != null) {
 				produtoDAO.editar(produto);
@@ -154,8 +141,6 @@ public class ProdutoMB implements Serializable{
 			produto = produtoDAO.getPrimaryKey(produto);
 			categoriaSelecionada = produto.getSubCategoria().getCategoria().getCodigoCategoria();
 			subCategoriaSelecionada = produto.getSubCategoria().getCodigoSubCategoria();		
-			
-
 			return "/cadastraProduto.faces";
 		}
 		
@@ -171,12 +156,14 @@ public class ProdutoMB implements Serializable{
 			return "/visualizaProduto.faces";
 		}
 
-		public String excluir() throws DAOException {
-			if (produto == null) {
-				// enviar mensagem de alerta/erro ("Não é possivel excluir categoria nula!");
-			} else {
-				produtoDAO.excluir(produto);
+		public String desativar() throws DAOException {
+			
+			if (produto.isAtivo()){
+				produto.setAtivo(false);
+			} else{
+				produto.setAtivo(true);
 			}
+			produtoDAO.editar(produto);
 		
 			return "/buscaProduto.faces?faces-redirect=true";
 		}

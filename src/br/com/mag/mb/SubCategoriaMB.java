@@ -100,12 +100,14 @@ public class SubCategoriaMB implements Serializable{
 		return "/visualizaSubCategoria.faces";
 	}
 
-	public String excluir() throws DAOException {
-		if (subCategoria == null) {
-			// enviar mensagem de alerta/erro ("Não é possivel excluir categoria nula!");
-		} else {
-			subCategoriaDAO.excluir(subCategoria);
+	public String desativar() throws DAOException {
+		
+		if (subCategoria.isAtivo()){
+			subCategoria.setAtivo(false);
+		} else{
+			subCategoria.setAtivo(true);
 		}
+		subCategoriaDAO.editar(subCategoria);
 	
 		return "/buscaSubCategoria.faces?faces-redirect=true";
 	}

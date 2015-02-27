@@ -24,8 +24,8 @@ public class Produto extends AbstractEntity {
 	private double valorVenda;
 	private double valorCusto;
 	private String unidade;
-	private double estoqueMinimo;
-	private double qtdEstoque;
+	private Integer estoqueMinimo;
+	private Integer qtdEstoque;
 	private boolean ativo;
 	
 	@OneToOne
@@ -37,7 +37,7 @@ public class Produto extends AbstractEntity {
 	
 	public Produto(String descricao, TipoGenero genero, String complemento,
 			double valorVenda, double valorCusto, String unidade,
-			double estoqueMinimo, double qtdEstoque, SubCategoria subcategoria) {
+			Integer estoqueMinimo, Integer qtdEstoque, SubCategoria subcategoria) {
 		super();
 		this.descricao = descricao;
 		this.genero = genero;
@@ -110,13 +110,13 @@ public class Produto extends AbstractEntity {
 	public double getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
-	public void setEstoqueMinimo(double estoqueMinimo) {
+	public void setEstoqueMinimo(Integer estoqueMinimo) {
 		this.estoqueMinimo = estoqueMinimo;
 	}
 	public double getQtdEstoque() {
 		return qtdEstoque;
 	}
-	public void setQtdEstoque(double qtdEstoque) {
+	public void setQtdEstoque(Integer qtdEstoque) {
 		this.qtdEstoque = qtdEstoque;
 	}
 	

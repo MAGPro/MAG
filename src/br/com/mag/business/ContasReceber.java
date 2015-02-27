@@ -1,6 +1,6 @@
 package br.com.mag.business;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,17 +23,17 @@ public class ContasReceber extends AbstractEntity{
 	private Integer codigoContasReceber;
 	@Enumerated(EnumType.STRING)
 	private TipoSituacaoContasReceber situacaoContasReceber;
-	private Calendar dataPagamento;
+	private Date dataPagamento;
 	private Calendar dataPrevista;
-	private double valorPago;
-	private double valorParcela;
+	private Double valorPago;
+	private Double valorParcela;
 	
 	
 	@ManyToOne
 	private Venda venda;
 	
 	public ContasReceber(TipoSituacaoContasReceber situacaoContasReceber,
-			Calendar dataPagamento, double valorPago, Venda venda) {
+			Date dataPagamento, Double valorPago, Venda venda) {
 		super();
 		this.situacaoContasReceber = situacaoContasReceber;
 		this.dataPagamento = dataPagamento;
@@ -42,7 +42,7 @@ public class ContasReceber extends AbstractEntity{
 	}
 	
 	public ContasReceber(){
-		this.dataPagamento = new GregorianCalendar();
+//		this.dataPagamento = new GregorianCalendar();
 	}
 
 	public Integer getCodigoContasReceber() {
@@ -61,19 +61,19 @@ public class ContasReceber extends AbstractEntity{
 		this.situacaoContasReceber = situacaoContasReceber;
 	}
 
-	public Calendar getDataPagamento() {
+	public Date getDataPagamento() {
 		return dataPagamento;
 	}
 
-	public void setDataPagamento(Calendar dataPagamento) {
+	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public double getValorPago() {
+	public Double getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(double valorPago) {
+	public void setValorPago(Double valorPago) {
 		this.valorPago = valorPago;
 	}
 
@@ -93,11 +93,11 @@ public class ContasReceber extends AbstractEntity{
 		this.dataPrevista = dataPrevista;
 	}
 
-	public double getValorParcela() {
+	public Double getValorParcela() {
 		return valorParcela;
 	}
 
-	public void setValorParcela(double valorParcela) {
+	public void setValorParcela(Double valorParcela) {
 		this.valorParcela = valorParcela;
 	}
 

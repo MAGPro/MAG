@@ -8,7 +8,7 @@
 
 <ui:composition template="/pages/_template.xhtml">
 	<ui:define name="conteudo">
-	<h:form prependId="false">
+	<h:form id="form">
 	
 	<div align="center">
 		<p:messages id= "messages" showDetail="true"  autoUpdate="true" closable="true"/>
@@ -20,18 +20,14 @@
 		<h:panelGrid></h:panelGrid>
 		
 	   <p:dataTable id="contas1" var="contas" value="#{contasReceberMB.listContasReceber}" editable="true" style="margin-bottom:20px">
-       <p:ajax event="cellEdit"  listener="#{contasReceberMB.salvar}" update="@this"/>
-       <p:ajax event="rowEditCancel" listener="#{contasReceberMB.salvar}" update="@this"/>
        
-       
+		<p:ajax event="rowEdit"  listener="#{contasReceberMB.salvar}" update=":form:contas1"/>
+       <p:ajax event="rowEditCancel" listener="#{contasReceberMB.cancelar}" update=":form:contas1"/>
+           
       <p:column headerText="Cliente">
            <p:cellEditor>
                <f:facet name="output"><center><h:outputText value="#{contas.venda.cliente.nome}" /></center></f:facet>
-               <f:facet name="input">
-                   <h:selectOneMenu id="cliente" value="#{contas.venda.cliente.codigoCliente}" style="width:100%" disabled="true">
-                   	<f:selectItems value="#{clienteMB.clientes}"  var="cliente" itemLabel="#{cliente.nome}" itemValue="cliente.CodigoCliente"/>
-                   </h:selectOneMenu>
-               </f:facet>
+               <f:facet name="input"><p:inputText value="#{contas.venda.cliente.nome}"  style="width:100%" readonly="true"/></f:facet>
            </p:cellEditor>
        </p:column> 
     
@@ -71,8 +67,8 @@
  		<p:column headerText="Data de pagamento">
  		   <center>
            <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{contas.dataPagamento.time}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
-               <f:facet name="input"><p:calendar value="#{contas.dataPagamento.time}" pattern="dd/MM/yyyy" mask="true" style="width:100%" /></f:facet>
+               <f:facet name="output"><h:outputText value="#{contas.dataPagamento}"><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+               <f:facet name="input"><p:calendar value="#{contas.dataPagamento}" pattern="dd/MM/yyyy" mask="true" style="width:100%" /></f:facet>
            </p:cellEditor>
            </center>
        </p:column>

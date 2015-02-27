@@ -2,22 +2,20 @@ package br.com.mag.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
 
-import javax.faces.bean.SessionScoped;
 
 import org.primefaces.event.RowEditEvent;
 
 import br.com.mag.business.ContasReceber;
 import br.com.mag.business.dao.ContasReceberDAO;
-import br.com.mag.business.dao.DAOException;
 import br.com.mag.business.enumeration.TipoSituacaoContasReceber;
 
 
-@SessionScoped
 @ManagedBean
 public class ContasReceberMB implements Serializable{
 
@@ -60,51 +58,70 @@ public class ContasReceberMB implements Serializable{
 		return TipoSituacaoContasReceber.values();
 	}
 	
-	public String salvar(RowEditEvent ev) throws DAOException {
+	public void cancelar(RowEditEvent ev){
+         //return "/contasReceber.faces?faces-redirect=true";
+	}
+	
+	public void salvar(RowEditEvent ev){
 		
-//		contasReceber = new ContasReceber();    
-//	    contasReceber = (ContasReceber) ev.getObject();  
-//	    ContasReceber contas = contasReceberDAO.getPrimaryKey(contasReceber.getId());
-//	    contas.setDataPagamento(contasReceber.getDataPagamento());
-//	    contas.setValorPago(contasReceber.getValorPago());
-//	    System.out.println("Codigo " + contasReceber.getId()); 
-//	    System.out.println("Pago: "+contasReceber.getValorPago());
-//	    System.out.println("Valor a pagar"+contasReceber.getValorParcela());
-//	    
-//	    contasReceberDAO.editar(contasReceber);
-		System.out.println("Entrouu");
-		
-		
-//		if (contasReceber == null) {
+		contasReceber = new ContasReceber();    
+	    contasReceber = (ContasReceber) ev.getObject();  
+
+		if (contasReceber == null) {
 //			//**enviar mensagem de alerta/erro ("Não é possivel salvar categoria nula!");
-//		} else{ 
-//			
-//			if (contasReceber.getValorPago()==0){
-//				contasReceber.setSituacaoContasReceber(TipoSituacaoContasReceber.ABERTO);
-//			}else{
-//				contasReceber.setSituacaoContasReceber(TipoSituacaoContasReceber.QUITADO);
-//				
-//				if (contasReceber.getValorParcela() > contasReceber.getValorPago()){
-//					List<ContasReceber> listaVendas = new ArrayList<ContasReceber>(); 
-//					listaVendas = contasReceberDAO.ContasVenda(contasReceber.getVenda().getCodigoVenda());
-//					
-//					for (ContasReceber lista : listaVendas) {
-//						if(lista.getCodigoContasReceber()==contasReceber.getCodigoContasReceber()){
-//							auxiliar = 1;
-//						}
-//						if ((auxiliar) ==1 && (lista.getCodigoContasReceber()!=contasReceber.getCodigoContasReceber())){	
-//							lista.setValorParcela(lista.getValorParcela()+(contasReceber.getValorParcela()-contasReceber.getValorPago()));
-//							contasReceberDAO.editar(lista);
-//							break;
-//						}
-//					}
-//				 }
-//			}
-//			
-//			
-//		}
-//		contasReceberDAO.editar(contasReceber);
-		return "/contasReceber.faces?faces-redirect=true";
+		} else{ 
+			
+			if (contasReceber.getValorPago()==0){
+				contasReceber.setSituacaoContasReceber(TipoSituacaoContasReceber.ABERTO);
+			}else{
+				contasReceber.setSituacaoContasReceber(TipoSituacaoContasReceber.QUITADO);
+				
+				if (contasReceber.getValorParcela() > contasReceber.getValorPago()){
+					List<ContasReceber> listaVendas = new ArrayList<ContasReceber>(); 
+					listaVendas = contasReceberDAO.ContasVenda(contasReceber.getVenda().getCodigoVenda());
+					
+					for (ContasReceber lista : listaVendas) {
+						if(lista.getCodigoContasReceber()==contasReceber.getCodigoContasReceber()){
+							auxiliar = 1;
+						}
+						if (lista.getCodigoContasReceber() < contasReceber.getCodigoContasReceber()){
+							auxiliar = 2;
+						}else{
+							if ((auxiliar) ==1 && (lista.getCodigoContasReceber()!=contasReceber.getCodigoContasReceber())){	
+								lista.setValorParcela(lista.getValorParcela()+(contasReceber.getValorParcela()-contasReceber.getValorPago()));
+								contasReceberDAO.editar(lista);
+								break;
+							}
+						}
+						if (auxiliar==2){
+							ContasReceber contas = new ContasReceber();
+				            
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(contasReceber.getDataPrevista().getTime());
+							cal.add(Calendar.MONTH, 1);
+							
+				            contas.setDataPrevista(cal);
+				            contas.setDataPagamento(null);
+				            contas.setValorPago(null);
+							contas.setValorParcela(contasReceber.getValorParcela()-contasReceber.getValorPago());
+							contas.setSituacaoContasReceber(TipoSituacaoContasReceber.ABERTO);
+							contas.setVenda(contasReceber.getVenda());
+							contasReceberDAO.salvar(contas);
+							break;
+							
+						}
+						
+					}
+					
+					
+				 }
+			}
+				
+		}
+		contasReceberDAO.editar(contasReceber);
+		//contasReceber = null;
+		this.listContasReceber =  contasReceberDAO.listarTodos();
+		//return "/contasReceber.faces?faces-redirect=true";
 	}
 	
 }

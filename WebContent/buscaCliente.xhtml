@@ -50,7 +50,7 @@
 
 				<p:column headerText="Situação">
 					<center>
-						<p:outputLabel value="#{cliente.situacaoCliente}" />
+						<p:outputLabel value="#{cliente.situacaoCliente == 'ADIPLENTE' ? 'ADIPLENTE' : 'INADIPLENTE'}" />
 					</center>
 				</p:column>
 
@@ -73,9 +73,10 @@
 					</p:commandLink>
 
 					<h:outputText value="   " />
-					<p:commandLink action="#{clienteMB.excluir}">
-						<p:graphicImage url="/resources/img/glyphicons_016_bin.png"
-							title="Excluir" />
+					
+					<p:commandLink action="#{clienteMB.desativar}">
+						<p:graphicImage url="#{cliente.situacaoCliente == 'ADIPLENTE' ? '/resources/img/glyphicons_152_check.png' : '/resources/img/glyphicons_153_unchecked.png'}"
+							title="#{cliente.situacaoCliente == 'ADIPLENTE' ? 'Desativar' : 'Ativar'}" />
 						<f:setPropertyActionListener value="#{cliente}"
 							target="#{clienteMB.cliente}" />
 					</p:commandLink>

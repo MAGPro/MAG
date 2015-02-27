@@ -35,18 +35,18 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 		return clientes;
 	} 
 	
-/*	public List<Categoria> listarAtivas(){
-		List<Categoria> categorias = new ArrayList<Categoria>();
-		StringBuffer sql = new StringBuffer("Select c from Categoria c ");
+	public List<Cliente> listarAtivos(){
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		StringBuffer sql = new StringBuffer("Select c from Cliente c ");
 		
-		sql.append(" WHERE c.ativo = TRUE");
+		sql.append(" WHERE c.situacaoCliente = ADIPLENTE");
 		
 		Query query = getEntityManager().createQuery(sql.toString());
 		
-		categorias = query.getResultList();
+		clientes = query.getResultList();
 		
-		return categorias;
-	} */
+		return clientes;
+	} 
 	
 	public void buscarCategoria(Integer id){
 		getPrimaryKey(id);

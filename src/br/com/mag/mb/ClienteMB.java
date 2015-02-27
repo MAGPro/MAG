@@ -33,6 +33,7 @@ public class ClienteMB implements Serializable {
 	// private List<Cliente> clientes;
 	private Endereco enderecoSelecionado;
 	private Endereco endereco = new Endereco();
+	private List<Cliente> clientesAtivos = new ArrayList<Cliente>();
 
 	private FiltroCliente clientesF = new FiltroCliente();
 
@@ -116,6 +117,24 @@ public class ClienteMB implements Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public List<Cliente> getClientesAtivos() {
+		if(clientesAtivos == null){
+			clientesAtivos = new ArrayList<Cliente>();
+		}
+		
+		if(clientesAtivos.isEmpty()){
+			try{
+				List<Cliente> clienteList = clienteDao.listarAtivos();
+				for (Cliente cliente : clienteList) {
+					clientesAtivos.add(cliente);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return clientesAtivos;
+	}
 
 	public void adicionarEndereco() {
 
@@ -132,16 +151,9 @@ public class ClienteMB implements Serializable {
 				// enviar mensagem de alerta/erro
 
 			} else if (cliente.getCodigoCliente() == null) {
-
 				clienteDao.salvar(cliente);
-				context.execute("confirmation.show();");
 
 			} else {
-				if (clienteDao.getPrimaryKey(cliente) == null) {
-					throw new Exception(
-							"Erro ao atualizar, registro não encontrado");
-				}
-
 				clienteDao.editar(cliente);
 
 			}
@@ -149,7 +161,7 @@ public class ClienteMB implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		cliente = null;
+		cliente = new Cliente();
 
 		return "/buscaCliente.faces?faces-redirect=true";
 
@@ -207,6 +219,19 @@ public class ClienteMB implements Serializable {
 			// enderecoSelecionado = null;
 		}
 	}
+	
+	public String desativar() throws DAOException {
+		
+		if (cliente.getSituacaoCliente().equals(TipoSituacaoCliente.ADIPLENTE)){
+			cliente.setSituacaoCliente(TipoSituacaoCliente.INADIPLENTE);
+		} else{
+			cliente.setSituacaoCliente(TipoSituacaoCliente.ADIPLENTE);
+		}
+		clienteDao.editar(cliente);
+	
+		return "/buscaCliente.faces?faces-redirect=true";
+	}
+	
 
 	public String voltar() {
 

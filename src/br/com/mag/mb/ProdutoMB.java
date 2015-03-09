@@ -132,7 +132,7 @@ public class ProdutoMB implements Serializable{
 			} else {
 				produtoDAO.salvar(produto);			
 			}
-			produto = null;
+			produto = new Produto();
 			return "/buscaProduto.faces";
 		}
 

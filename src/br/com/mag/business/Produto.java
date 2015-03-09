@@ -107,13 +107,13 @@ public class Produto extends AbstractEntity {
 	public void setUnidade(String unidade) {
 		this.unidade = unidade;
 	}
-	public double getEstoqueMinimo() {
+	public Integer getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
 	public void setEstoqueMinimo(Integer estoqueMinimo) {
 		this.estoqueMinimo = estoqueMinimo;
 	}
-	public double getQtdEstoque() {
+	public Integer getQtdEstoque() {
 		return qtdEstoque;
 	}
 	public void setQtdEstoque(Integer qtdEstoque) {

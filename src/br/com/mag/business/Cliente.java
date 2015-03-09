@@ -44,7 +44,7 @@ public class Cliente extends AbstractEntity{
 	@Enumerated(EnumType.STRING)
 	private TipoSituacaoCliente situacaoCliente;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_codigoCliente")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 		

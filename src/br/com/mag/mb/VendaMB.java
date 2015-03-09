@@ -100,7 +100,7 @@ public class VendaMB {
          
 	}
 	public void adicionaContaReceberAvista(){
-		contaReceber.setDataPagamento(venda.getDataVenda());
+		contaReceber.setDataPagamento(venda.getDataVenda().getTime());
 		contaReceber.setDataPrevista(venda.getDataVenda());
 		contaReceber.setSituacaoContasReceber(TipoSituacaoContasReceber.QUITADO);
 		contaReceber.setValorPago(valorTotal);
@@ -122,7 +122,9 @@ public class VendaMB {
 			
 		} else if (venda.getFormaPagamento().equals(TipoFormaPagamento.APRAZO)) {
 			valorParcela = calculaValorParcela(qtdParcelas);
-			vencimento = contaReceber.getDataPagamento();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(contaReceber.getDataPagamento()); 
+			vencimento = cal;
 			geraParcelaPorDiaVencimento();
 		}
 	}
